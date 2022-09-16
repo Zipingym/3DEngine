@@ -1,5 +1,6 @@
 import ThreeDefault from "../three";
 import { Performance } from "../util";
+import eventListener from "../global/eventlistener";
 
 export default class App {
     private root: HTMLElement
@@ -11,7 +12,6 @@ export default class App {
         root: HTMLElement
     ) {
         this.root = root
-
         this.threeDefault = new ThreeDefault(this.root)
         this.update()
     }
