@@ -13,7 +13,7 @@ export default class App {
     
     private threeDefault: ThreeDefault
     private core: Core
-    private socket?: Socket
+    private socket: Socket
 
     constructor(
         root: HTMLElement
@@ -39,6 +39,7 @@ export default class App {
 
         this.core.update(interval)
         this.threeDefault.update(interval)
+        this.socket.update()
         this.performance.end()
     }
 }
