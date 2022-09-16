@@ -1,5 +1,6 @@
 import ThreeDefault from "../three";
 import Core from "../core";
+import Socket from '../socket'
 
 import { Performance } from "../util";
 
@@ -12,6 +13,7 @@ export default class App {
     
     private threeDefault: ThreeDefault
     private core: Core
+    private socket: Socket
 
     constructor(
         root: HTMLElement
@@ -19,6 +21,7 @@ export default class App {
         this.root = root
         this.threeDefault = new ThreeDefault(this.root)
         this.core = new Core(this.threeDefault.getScene())
+        this.socket = new Socket()
         this.update()
 
         // eventListener.add('emit', (data) => {
