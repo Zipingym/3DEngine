@@ -19,7 +19,7 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(png|jpe?g|gif|svg|gltf)$/,
+                test: /\.(png|jpe?g|gif|svg)$/,
                 use: {
                     loader: 'url-loader',
                     options: {
@@ -29,6 +29,12 @@ module.exports = {
                     }
                 }
             },
+            {
+                test: /\.gltf$/,
+                use: {
+                    loader: 'file-loader'
+                }
+            }
         ]
     },
     output: {

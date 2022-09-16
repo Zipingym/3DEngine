@@ -26,7 +26,7 @@ export default class ThreeDefault implements UpdateAble {
 
         window.addEventListener('resize', this.resize.bind(this), false)
     }
-    public update = () => {
+    public update = (interval: number) => {
         this.control.update()
         this.render()
     }
