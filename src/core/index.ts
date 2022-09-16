@@ -15,9 +15,9 @@ export default class Core implements UpdateAble {
         
         this.scene = scene
         this.human = new Human(humanModel, this.scene)
-        
+        // this.human.a
     }
     public update = (interval: number) => {
-
+        this.human.update(interval)
     }
 }

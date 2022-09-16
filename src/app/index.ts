@@ -13,7 +13,7 @@ export default class App {
     
     private threeDefault: ThreeDefault
     private core: Core
-    private socket: Socket
+    private socket?: Socket
 
     constructor(
         root: HTMLElement

@@ -23,7 +23,7 @@ export default class socket{
 
     constructor() {
         this.socket = io('http://172.30.7.186:8001', {
-            path: '/socket',
+            path: '/',
             transports: ['websocket']
         })
         this.socket.on('connect', function () {
@@ -35,6 +35,7 @@ export default class socket{
         this.sendNamespaces.forEach((send: sendSocket) => {
             eventListener.add(send.event, (data: string) => { this.emit(send.namespace, data) })
         })
+        this.emit("events", "SEX")
     }
     private emit(namespace: string, data: any) {
         this.socket.emit(namespace, data)
