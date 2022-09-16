@@ -22,11 +22,13 @@ export default class socket{
     ]
 
     constructor() {
-        this.socket = io('ws://localhost:8001', {
+        this.socket = io('http://localhost:8000', {
+            autoConnect: true,
             transports: ['websocket']
+            
         })
         this.socket.on('connect', function () {
-            console.log('connect')
+            console.log('connected!')
         })
         // this.reciveNamespaces.forEach((recive: reciveSocket) => {
         //     this.socket.on(recive.namespace, recive.on)

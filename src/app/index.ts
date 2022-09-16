@@ -23,14 +23,6 @@ export default class App {
         this.core = new Core(this.threeDefault.getScene())
         this.socket = new Socket()
         this.update()
-
-        // eventListener.add('emit', (data) => {
-        //     console.log(data)
-        // })
-
-        // eventListener.execute('emit', {
-        //     adasd: "asdasd"
-        // })
     }
     private update() {
         requestAnimationFrame(this.update.bind(this))
