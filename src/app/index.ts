@@ -12,6 +12,7 @@ export default class App {
     
     private threeDefault: ThreeDefault
     private core: Core
+
     constructor(
         root: HTMLElement
     ) {
