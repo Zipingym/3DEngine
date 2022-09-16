@@ -8,6 +8,7 @@ export default class App {
     private performance:Performance = new Performance()
     
     private threeDefault: ThreeDefault
+
     constructor(
         root: HTMLElement
     ) {
