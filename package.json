@@ -25,6 +25,7 @@
     "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
+    "@mediapipe/pose": "^0.5.1635988162",
     "socket.io-client": "^4.5.2",
     "three": "^0.144.0"
   }
