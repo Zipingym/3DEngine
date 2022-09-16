@@ -1,13 +1,165 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My React App</title>
 </head>
+
 <body>
-    <div id="app"></div>
+    <div id="wrapper">
+        <div id="app"></div>
+        <div class="form signUp">
+            <div class="inputs">
+                <input class="input" type="text" placeholder="키" />
+                <input class="input" type="text" placeholder="몸무게" />
+                <input class="input" type="text" placeholder="이름" />
+                <input class="input" type="password" placeholder="비밀번호" />
+                <input class="input" type="password" placeholder="비밀번호확인" />
+            </div>
+            <input onclick="signUp()" class="submitButton" type="button" value="회원가입" />
+        </div>
+
+        <div class="form signIn">
+            <div class="inputs">
+                <input class="input" type="text" placeholder="이름" />
+                <input class="input" type="password" placeholder="비밀번호" />
+            </div>
+            <input onclick="signIn()" class="submitButton" type="button" value="로그인" />
+        </div>
+
+    </div>
+
+    <style>
+        #wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form {
+            /* right,top,width,height는 지정 */
+            /* right:0px;
+            top:0px;
+            height:100px;
+            width:100px; */
+            position: absolute;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signUp {
+            width: 500px;
+            height: 600px;
+            border-radius: 15px;
+            display: none;
+        }
+        .signIn{
+            width:500px;
+            height:350px;
+            border-radius: 15px;
+            display: none;
+        }
+
+        .inputs {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input {
+            width: 250px;
+            height: 40px;
+            border-radius: 15px;
+            border: 0px;
+            margin: 5px;
+            padding-left: 15px;
+        }
+
+        .input:focus {
+            outline: none;
+        }
+
+        .submitButton {
+            margin-top: 40px;
+            width: 250px;
+            height: 40px;
+            border-radius: 15px;
+            border: 0px;
+            background-color: #0095f6;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        const upHeight = document.querySelector('.signUp > .inputs > input:nth-child(1)')
+        const upWeight = document.querySelector('.signUp > .inputs > input:nth-child(2)')
+        const upName = document.querySelector('.signUp > .inputs > input:nth-child(3)')
+        const upPassword = document.querySelector('.signUp > .inputs > input:nth-child(4)')
+        const upPasswordCheck = document.querySelector('.signUp > .inputs > input:nth-child(5)')
+
+
+        const inName = document.querySelector('.signIn > .inputs > input:nth-child(1)')
+        const inPassword = document.querySelector('.signIn > .inputs > input:nth-child(2)')
+
+
+        async function postData(url = '', data = {}) {
+            // console.log(data)
+            // 옵션 기본 값은 *로 강조
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE 등
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+            });
+            return response.json(); // JSON 응답을 네이티브 JavaScript 객체로 파싱
+        }
+
+        function signUp() {
+            if (upPassword.value === upPasswordCheck.value) {
+                postData('url',{
+                    "height":upHeight.value,
+                    "weight":upWeight.value,
+                    "name":upName.value,
+                    "password":upPassword.value,
+                }).then((data) => {
+                    console.log(data)
+                }).catch((err) => {
+                    console.log(err)
+                })
+            } else {
+                alert("비밀번호 확인과 다릅니다")
+            }
+        }
+
+        function signIn(){
+            postData('url',{
+                "name":inName.value,
+                "password":inPassword.vaue
+            }).then((data) => {
+                console.log(data)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+    </script>
+
     <script src="./bundle.js"></script>
 </body>
+
 </html>
