@@ -28,16 +28,16 @@ export default class socket{
         this.socket.on('connect', function () {
             console.log('connect')
         })
-        this.reciveNamespaces.forEach((recive: reciveSocket) => {
-            this.socket.on(recive.namespace, recive.on)
-        })
-        this.sendNamespaces.forEach((send: sendSocket) => {
-            eventListener.add(send.event, (data: string) => { this.emit(send.namespace, data) })
-        })
-        console.log(this.socket)
-        this.emit("events", {
-            sex: "SEX"
-        })
+        // this.reciveNamespaces.forEach((recive: reciveSocket) => {
+        //     this.socket.on(recive.namespace, recive.on)
+        // })
+        // this.sendNamespaces.forEach((send: sendSocket) => {
+        //     eventListener.add(send.event, (data: string) => { this.emit(send.namespace, data) })
+        // })
+        // console.log(this.socket)
+        // this.emit("events", {
+        //     sex: "SEX"
+        // })
     }
     private emit(namespace: string, data: any) {
         this.socket.emit(namespace, data)
