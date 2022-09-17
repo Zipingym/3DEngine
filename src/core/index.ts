@@ -7,7 +7,7 @@ import { UpdateAble } from '../interface';
 //@ts-ignore
 import humanModel from '../static/model/man.gltf'
 //@ts-ignore
-import gymModel from '../static/model/gym1_1_3.gltf'
+import gymModel from '../static/model/gym1_1_7.gltf'
 export default class Core implements UpdateAble {
     private scene: Scene
 

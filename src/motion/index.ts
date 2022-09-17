@@ -23,10 +23,9 @@ export default class Motion implements UpdateAble{
         )
         const three = document.createElement('div')
         three.style.width = '360px'
-        three.style.height = 'calc(100% - 360px)'
+        three.style.height = '360px'
 
         this.parent.appendChild(three)
-        console.log(three)
         this.graphic = new Graphic(
             three
         )
@@ -40,10 +39,14 @@ export default class Motion implements UpdateAble{
                 results.poseWorldLandmarks[idx].z *= this.delta
             })
             this.graphic.set(results.poseWorldLandmarks)
-            this.out(this.graphic)
+            this.out(results)
         }
     }
     public update() {
         this.graphic.update()
     }
+    public getCamera() {
+        return this.graphic.camera
+    }
+
 }

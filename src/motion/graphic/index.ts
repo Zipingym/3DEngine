@@ -1,4 +1,4 @@
-import { Vector3 } from 'three'
+import { Euler, Vector3 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import * as Core from './core'
 import Point from './point'
@@ -6,9 +6,10 @@ import { NormalizedLandmark, NormalizedLandmarkList } from '@mediapipe/pose'
 import Line from './line'
 import Axis from './axis'
 import link, { boneInfo } from '../link'
+import Selfie from './selfie'
 export default class Graphic {
     private scene:Core.Scene
-    private camera:Core.Camera
+    public camera:Core.Camera
     private renderer:Core.Renderer
     private light:Core.Light
     private control:OrbitControls
@@ -19,6 +20,7 @@ export default class Graphic {
     private points: Array<Point> = new Array()
     private lines: Array<Line> = new Array()
     private axis: Axis
+    private selfies: Array<Selfie> = new Array()
     constructor (
         parent: HTMLElement
     ) {
@@ -42,11 +44,20 @@ export default class Graphic {
         })
         this.axis = new Axis(new Vector3(0, 0, 0))
         this.axis.render(this.scene)
+        selfies.forEach((element, idx) => {
+            this.selfies.push(new Selfie(element))
+            this.selfies[idx].render(this.scene)
+        })
+        // this.selfies.push("")
     }
     public set(positions: NormalizedLandmarkList) {
         this.setPoints(positions)
         this.setBone(positions)
+        this.selfies.forEach((element, idx) => {
+            element.set(positions)
+        })
     }
+
     private setBone(positions: NormalizedLandmarkList) {
         this.link.forEach((element, idx) => {
             this.lines[idx].set([
@@ -88,3 +99,9 @@ export default class Graphic {
         )
     }
 }
+
+const selfies = [
+    [13, 11, 15],
+    [14, 12, 16],
+    
+]
