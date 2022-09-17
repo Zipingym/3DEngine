@@ -48,25 +48,20 @@ export default class App {
     example.position.set(0,10,0);
     this.scene.add(example)
     
-    this.socket = new Socket();
-    this.socket.emit("connection","유은재바보")
-
     this.render();
-
-    this.socket.on('connection',() => {
-      console.log("ㅎㅇ")
-    })
     
+      this.socket = new Socket();
+
     this.update();
     // window.addEventListener('resize', this.resize.bind(this), false)
   }
 
   private update() {
     requestAnimationFrame(this.update.bind(this))
-
-    // this.socket.update()
-    
+    this.socket.update()
     this.render();
+
+
     // const interval = this.performance.getInterval()
     // this.performance.start()
 
