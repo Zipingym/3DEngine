@@ -18,25 +18,24 @@ export default class Input {
         if (leftArm > 80 && leftArm < 180){
             if (this.bendLeft){
                 this.bendLeft = false
-                eventListener.execute("input-walk", 1000)
+                // eventListener.execute("input-walk", 1000)
+                console.log("ㅎㅇ")
+                eventListener.execute("input-rotate", 0.1)
             }
         } else if(leftArm <= 80 && leftArm > 0) { // 굽혔을 때
-            // eventListener.execute("input-rotate", 0.1)
             this.bendLeft = true
         }
     }else if (rightArm != undefined){
         if (rightArm > 180 && rightArm < 260){
             if (this.bendRight){
                 this.bendRight = false
-                eventListener.execute("input-walk",1000)
+                // eventListener.execute("input-walk",1000)
+                console.log("ㅂㅇ")
+                eventListener.execute("input-rotate", -0.1)
             }
         } else if(rightArm >= 260 && rightArm < 360){ // 폈을 때
-            // eventListener.execute("input-rotate", -0.1)
             this.bendRight = true
         }
-    }else{
-        // console.log("ASE")
-        // eventListener.execute("stop")
     }
 
 

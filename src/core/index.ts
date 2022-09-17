@@ -18,7 +18,6 @@ export default class Core implements UpdateAble {
 
     public humans: Map<string, Human> = new Map()
     private world: World
-    private example: Mesh
 
     constructor (
         scene: Scene,
@@ -27,13 +26,6 @@ export default class Core implements UpdateAble {
         this.scene = scene
         this.humans.set(JSON.parse(sessionStorage.getItem('loggedIn')!).username, new Human(humanModel, this.scene, camera))
         this.world = new World(gymModel, this.scene)
-
-        const sphere = new THREE.SphereGeometry(1,10,10)
-        const material = new THREE.MeshBasicMaterial({color:0x00ff00})
-        this.example = new THREE.Mesh(sphere,material )
-        this.example.position.set(0,10,0);
-
-        this.scene.add(this.example)
     }
     public update = (interval:number) => {
         this.humans.forEach((v, k) => {
