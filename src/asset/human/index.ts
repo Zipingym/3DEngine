@@ -10,7 +10,7 @@ export default class Human extends Loader implements UpdateAble{
     private scene: Scene
     private camera?: Camera
     private isMe: boolean
-    public position: Vector3 = new Vector3(0, 0, 0)
+    public position: Vector3 = new Vector3(10, 0, 40)
     public rotation: number = 0
     public movement: Array<{delta: {pos: Vector3 | number, rot: number}, time: number,animateV:string}> = new Array()
     constructor(
@@ -26,6 +26,7 @@ export default class Human extends Loader implements UpdateAble{
     }
     protected onLoad = (gltf: any) => {
         this.model = gltf.scene
+        // this.model.position.set(10, 0, 10)
         this.render(this.scene)
         this.animator = new Animator(gltf)
 

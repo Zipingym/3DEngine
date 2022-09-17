@@ -53,9 +53,7 @@ export default class Input {
         } else if ((leftArm <= 90 && leftArm > 50) && (rightArm > 145 && rightArm < 165)){
             eventListener.execute('input-rotate',0.005)
         }
-
       }
-
     } else {
         // console.log("없음")
     }
