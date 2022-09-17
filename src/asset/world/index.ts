@@ -14,6 +14,13 @@ export default class World extends Loader implements UpdateAble{
     }
     protected onLoad = (gltf: any) => {
         this.model = gltf.scene
+        this.model.scale.set(1.7, 1.7, 1.7)
+        console.log(this.model)
+        this.model.children.forEach((ele: any)  => {
+            if(ele.isLight) {
+                ele.intensity = 1
+            }
+        })
         this.render(this.scene)
     };
     protected onProgress = (xhr: any) => {

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { PerspectiveCamera, Vector2, Vector3 } from 'three'
 import { NormalizedLandmark } from '../../../dist/mediapipe'
-import Calculation from '../../posture/calculation'
+import Calculation from '../calculation'
 export default class Selfie {
     private length: number = 32
 
@@ -76,7 +76,7 @@ export default class Selfie {
         let result = 180 - (Calculation.TwoDegree(test[0], test[1], test[2]) * 180 / (Math.PI))
         // if(result < 0) result = 180 + -1 * result
         // console.log(result > -40 || result < -100)
-        console.log(result)
+        // console.log(result)
     }
     public render(scene: THREE.Scene) {
         this.meshs.forEach((mesh: THREE.Mesh) => {
