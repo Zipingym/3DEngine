@@ -1,4 +1,4 @@
-import { Euler, Vector3 } from 'three'
+import { Euler, Vector2, Vector3 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import * as Core from './core'
 import Point from './point'
@@ -7,6 +7,7 @@ import Line from './line'
 import Axis from './axis'
 import link, { boneInfo } from '../link'
 import Selfie from './selfie'
+import Calculation from '../calculation'
 export default class Graphic {
     private scene:Core.Scene
     public camera:Core.Camera
@@ -59,7 +60,7 @@ export default class Graphic {
             if(val != undefined)
                 ret.set(selfies[idx].name, val)
         })
-        // ret.set("Spine", )
+        ret.set("Spine", -1 * Calculation.TwoDegree(new Vector2(positions[24].y, positions[24].z), new Vector2(positions[24].y + 2, positions[24].z), new Vector2(positions[12].y, positions[12].z)))
         return ret
     }
 

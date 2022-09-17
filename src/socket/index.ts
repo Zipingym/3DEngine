@@ -41,7 +41,7 @@ export default class socket {
 
   public update(interval: number) {
     this.interval += interval
-    if (this.interval > 100) {
+    if (this.interval > 30) {
       if (this.name != '') {
         this.emit('vector', {
           rotation: this.core.humans.get(this.name)!.rotation,

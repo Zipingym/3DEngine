@@ -22,7 +22,6 @@ export default class Human extends Loader implements UpdateAble{
         this.camera = isMe
         this.scene = scene
         this.isMe = (isMe != undefined)
-        console.log(isMe)
         this.load()
     }
     protected onLoad = (gltf: any) => {
