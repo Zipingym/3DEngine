@@ -22,14 +22,11 @@ export default class socket{
     ]
 
     constructor() {
-        this.socket = io('http://localhost:8001', {
-            autoConnect: true,
-            transports: ['websocket']
-            
-        })
-        this.socket.on('connect', function () {
-            console.log('connected!')
-        })
+        this.socket = io('http://172.30.7.186:8400')
+
+        // this.socket.on('connect', function () {
+        //     console.log('connected!')
+        // })
         // this.reciveNamespaces.forEach((recive: reciveSocket) => {
         //     this.socket.on(recive.namespace, recive.on)
         // })
@@ -41,11 +38,14 @@ export default class socket{
         //     sex: "SEX"
         // })
     }
-    private emit(namespace: string, data: any) {
+    public emit(namespace: string, data: any) {
         this.socket.emit(namespace, data)
     }
     public update() {
-        // console.log(this.socket.connected)
+        console.log(this.socket.connected)
+    }
+    public on(namespace:string,data:any){
+        this.socket.on(namespace,data)
     }
 }
 
