@@ -22,7 +22,7 @@ export default class socket{
         this.socket.emit(namespace, data)
     }
     public update() {
-        console.log(this.socket.connected)
+        // console.log(this.socket.connected)
     }
     public on(namespace:string,data:any){
         this.socket.on(namespace,data)
