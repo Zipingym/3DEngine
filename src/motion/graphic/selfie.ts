@@ -34,6 +34,13 @@ export default class Selfie {
         this.meshs.push(temp)
     }
     public set(positions: Array<NormalizedLandmark>) {
+        this.positions.forEach((element) => {
+            if(positions[element].visibility != undefined)
+                if(positions[element].visibility! < 0.8) {
+
+                }
+        })
+
         const fir = this.positions[0]
         this.meshs[0].position.set(positions[fir].x, positions[fir].y, positions[fir].z)
 
@@ -74,9 +81,7 @@ export default class Selfie {
         })
 
         let result = 180 - (Calculation.TwoDegree(test[0], test[1], test[2]) * 180 / (Math.PI))
-        // if(result < 0) result = 180 + -1 * result
-        // console.log(result > -40 || result < -100)
-        // console.log(result)
+        return result
     }
     public render(scene: THREE.Scene) {
         this.meshs.forEach((mesh: THREE.Mesh) => {

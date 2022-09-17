@@ -30,7 +30,7 @@ export default class Motion implements UpdateAble{
             three
         )
     }
-    private out: (poseInfo: Results) => void
+    private out: (poseInfo: any) => void
     private onResult(results: Results) {
         if(results.poseWorldLandmarks != undefined) {
             results.poseWorldLandmarks.forEach((element, idx) => {
@@ -38,8 +38,11 @@ export default class Motion implements UpdateAble{
                 results.poseWorldLandmarks[idx].y *= this.delta
                 results.poseWorldLandmarks[idx].z *= this.delta
             })
-            this.graphic.set(results.poseWorldLandmarks)
-            this.out(results)
+            
+            this.out({
+                ...results,
+                degrees: this.graphic.set(results.poseWorldLandmarks)
+            })
         }
     }
     public update() {

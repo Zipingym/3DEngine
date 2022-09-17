@@ -45,17 +45,19 @@ export default class Graphic {
         this.axis = new Axis(new Vector3(0, 0, 0))
         this.axis.render(this.scene)
         selfies.forEach((element, idx) => {
-            this.selfies.push(new Selfie(element))
+            this.selfies.push(new Selfie(element.bones))
             this.selfies[idx].render(this.scene)
         })
         // this.selfies.push("")
     }
-    public set(positions: NormalizedLandmarkList) {
+    public set(positions: NormalizedLandmarkList): Map<string, any> {
         this.setPoints(positions)
         this.setBone(positions)
+        const ret = new Map()
         this.selfies.forEach((element, idx) => {
-            element.set(positions)
+            ret.set(selfies[idx].name, element.set(positions))
         })
+        return ret
     }
 
     private setBone(positions: NormalizedLandmarkList) {
@@ -101,7 +103,13 @@ export default class Graphic {
 }
 
 const selfies = [
-    [13, 11, 15],
-    [14, 12, 16],
-    
+    {
+        name: "leftArm",
+        bones: [13, 11, 15]
+    },
+    {
+        name: "RightArm",
+        bones: [14, 12, 16]
+    }
+    ,
 ]

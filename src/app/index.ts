@@ -5,6 +5,7 @@ import Motion from '../motion'
 
 import { Performance } from "../util";
 import { Results } from "../../dist/mediapipe";
+import Input from "../input";
 
 export default class App {
     private root: HTMLElement
@@ -15,6 +16,7 @@ export default class App {
     private core: Core
     private socket: Socket
     private motion: Motion
+    private input: Input
     constructor(
         root: HTMLElement
     ) {
@@ -23,6 +25,7 @@ export default class App {
         this.core = new Core(this.threeDefault.getScene())
         this.socket = new Socket()
         this.motion = new Motion(this.root, this.onResult)
+        this.input = new Input()
         this.update()
     }
     private update() {
@@ -36,7 +39,8 @@ export default class App {
         this.motion.update()
         this.performance.end()
     }
-    private onResult = (result: Results) => {
+    private onResult = (result: any) => {
+        console.log(result.degrees)
         // this.posture.check(result.poseWorldLandmarks)
         // console.log(result.poseWorldLandmarks)
     }
