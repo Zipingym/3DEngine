@@ -33,13 +33,16 @@ export default class socket {
     this.on('vector', (data: any) => {
       if(data.name != this.name) {
         const human = this.core.humans.get(data.name)!
-        const delta = Math.abs(human.position.x - data.x) + Math.abs(human.position.x - data.y) + Math.abs(human.position.x - data.z)
+        console.log(Math.abs(human.position.z - data.z))
+        const delta = Math.abs(human.position.x - data.x) + Math.abs(human.position.x - data.y) + Math.abs(human.position.z - data.z)
         human.rotation = data.rotation
         human.position.set(data.x, data.y, data.z)
-        if(delta == 0) {
+        if(delta < 0.5) {
+          console.log("SEX")
           human.animator?.animate("idle")
         }
         else {
+          console.log(delta)
           human.animator?.animate("walk")
         }
         

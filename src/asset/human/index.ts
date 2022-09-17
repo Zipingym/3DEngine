@@ -85,7 +85,7 @@ export default class Human extends Loader implements UpdateAble{
     public update: (interval: number) => void = (interval: number) => {
         if(this.isMe) {
             this.camera!.position.set(this.position.x, this.position.y + 2, this.position.z)
-            this.camera!.rotation.set(0, Math.PI - this.rotation, 0)
+            this.camera!.rotation.set(0, this.rotation, 0)
         }
         if(this.animator != undefined) {
 

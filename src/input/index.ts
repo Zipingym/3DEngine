@@ -48,15 +48,13 @@ export default class Input {
           eventListener.execute('input-walk',1000)
           this.clearIsBand()
         } else if ((leftArm > 150 && leftArm < 165) && (rightArm <= 125 && rightArm > 80)) { // 왼쪽핌, 오른쪽 굽힘
-            eventListener.execute('input-rotate',0.005)
+            eventListener.execute('input-rotate',0 -.005)
 
         } else if ((leftArm <= 90 && leftArm > 50) && (rightArm > 145 && rightArm < 165)){
-            eventListener.execute('input-rotate',-0.005)
+            eventListener.execute('input-rotate',0.005)
         }
 
       }
-
-
 
     } else {
         // console.log("없음")
