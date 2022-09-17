@@ -8,27 +8,31 @@ import eventListener from "../../global/eventlistener";
 export default class Human extends Loader implements UpdateAble{
     public animator?: Animator
     private scene: Scene
-
+    private isMe: boolean
     public position: Vector3 = new Vector3(0, 0, 0)
     public rotation: number = 0.5
     public movement: Map<string, {func: (ms: number) => void, time: number}> = new Map()
     constructor(
         fileName: string,
-        scene: Scene
+        scene: Scene,
+        isMe?: boolean
     ) {
         super(fileName)
         this.scene = scene
+        this.isMe = isMe != undefined ? isMe : false
         this.load()
     }
     protected onLoad = (gltf: any) => {
         this.model = gltf.scene
         this.render(this.scene)
         this.animator = new Animator(gltf)
-        console.log(this.animator.getAnimations())
+
         this.animator.animate("walk")
-        eventListener.add('input-walk', (time: number) => {
-            this.push("walk", this.walk.bind(this), time)
-        })
+        if(this.isMe) {
+            eventListener.add('input-walk', (time: number) => {
+                this.push("walk", this.walk.bind(this), time)
+            })
+        }
         // this.movement.push({ func: this.walk.bind(this), time: 20000})
     };
     protected onProgress = (xhr: any) => {

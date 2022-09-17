@@ -15,7 +15,7 @@ import gymModel from '../static/model/gym1_2_0.gltf'
 export default class Core implements UpdateAble {
     private scene: Scene
 
-    private human: Human
+    public humans: Map<string, Human> = new Map()
     private world: World
     private example: Mesh
 
@@ -23,7 +23,7 @@ export default class Core implements UpdateAble {
         scene: Scene
     ) {
         this.scene = scene
-        this.human = new Human(humanModel, this.scene)
+        this.humans.set(JSON.parse(sessionStorage.getItem('loggedIn')!).username, new Human(humanModel, this.scene))
         this.world = new World(gymModel, this.scene)
 
         const sphere = new THREE.SphereGeometry(1,10,10)
@@ -34,6 +34,8 @@ export default class Core implements UpdateAble {
         this.scene.add(this.example)
     }
     public update = (interval:number) => {
-        this.human.update(interval)
+        this.humans.forEach((v, k) => {
+            v.update(interval)
+        })
     }
 }

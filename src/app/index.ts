@@ -23,7 +23,7 @@ export default class App {
         this.root = root
         this.threeDefault = new ThreeDefault(this.root)
         this.core = new Core(this.threeDefault.getScene())
-        this.socket = new Socket()
+        this.socket = new Socket(this.core, this.threeDefault.getScene())
         this.motion = new Motion(this.root, this.onResult)
         this.input = new Input()
         this.update()
@@ -34,7 +34,7 @@ export default class App {
         this.performance.start()
         this.core.update(interval)
         this.threeDefault.update(interval)
-        this.socket.update()
+        this.socket.update(interval)
         this.motion.update()
         this.performance.end()
     }
