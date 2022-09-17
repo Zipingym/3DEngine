@@ -11,7 +11,7 @@ export default class ThreeDefault implements UpdateAble {
     private camera:Camera
     private renderer:Renderer
     private light:Light
-    private control:OrbitControls
+    // private control:OrbitControls
     private parent: HTMLElement
     constructor(
         parent: HTMLElement
@@ -20,18 +20,21 @@ export default class ThreeDefault implements UpdateAble {
         this.scene = new Scene()
         this.camera = new Camera(95, this.parent.clientWidth / this.parent.clientHeight)
         this.renderer = new Renderer(this.parent.clientWidth, this.parent.clientHeight, this.parent)
-        this.control = new OrbitControls(this.camera, this.renderer.domElement)
+        // this.control = new OrbitControls(this.camera, this.renderer.domElement)
         this.light = new Light()
         this.light.addLight(this.scene)
 
         window.addEventListener('resize', this.resize.bind(this), false)
     }
     public update = (interval:number) => {
-        this.control.update()
+        // this.control.update()
         this.render()
     }
     public getScene() {
         return this.scene
+    }
+    public getCamera() {
+        return this.camera
     }
     private render() {
         this.renderer.render(this.scene, this.camera)

@@ -21,10 +21,13 @@ export default class App {
         root: HTMLElement
     ) {
         this.root = root
+        const ui = document.createElement('div')
+        ui.style.position = "absolute"
+        this.root.appendChild(ui)
         this.threeDefault = new ThreeDefault(this.root)
-        this.core = new Core(this.threeDefault.getScene())
+        this.core = new Core(this.threeDefault.getScene(), this.threeDefault.getCamera())
         this.socket = new Socket(this.core, this.threeDefault.getScene())
-        this.motion = new Motion(this.root, this.onResult)
+        this.motion = new Motion(ui, this.onResult)
         this.input = new Input()
         this.update()
     }

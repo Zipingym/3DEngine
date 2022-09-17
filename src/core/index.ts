@@ -11,7 +11,8 @@ import * as THREE from "three"
 //@ts-ignore
 import humanModel from '../static/model/anmatied_man.gltf'
 //@ts-ignore
-import gymModel from '../static/model/gym1_2_0.gltf'
+import gymModel from '../static/model/gym1_2_4.gltf'
+import { Camera } from '../three';
 export default class Core implements UpdateAble {
     private scene: Scene
 
@@ -20,10 +21,11 @@ export default class Core implements UpdateAble {
     private example: Mesh
 
     constructor (
-        scene: Scene
+        scene: Scene,
+        camera: Camera
     ) {
         this.scene = scene
-        this.humans.set(JSON.parse(sessionStorage.getItem('loggedIn')!).username, new Human(humanModel, this.scene))
+        this.humans.set(JSON.parse(sessionStorage.getItem('loggedIn')!).username, new Human(humanModel, this.scene, camera))
         this.world = new World(gymModel, this.scene)
 
         const sphere = new THREE.SphereGeometry(1,10,10)
