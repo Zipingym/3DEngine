@@ -80,7 +80,6 @@ export default class Selfie {
         this.positions.forEach((element, idx) => {
             test.push(Calculation.createVector(positions[element].x, positions[element].y, positions[element].z, this.camera))
         })
-
         let result = 180 - (Calculation.TwoDegree(test[0], test[1], test[2]) * 180 / (Math.PI))
         return result
     }

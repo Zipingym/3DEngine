@@ -59,6 +59,7 @@ export default class Graphic {
             if(val != undefined)
                 ret.set(selfies[idx].name, val)
         })
+        // ret.set("Spine", )
         return ret
     }
 
@@ -113,5 +114,4 @@ const selfies = [
         name: "RightArm",
         bones: [14, 12, 16]
     }
-    ,
 ]
