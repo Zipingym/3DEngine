@@ -9,7 +9,7 @@ import { UpdateAble } from '../interface';
 import * as THREE from "three"
 
 //@ts-ignore
-import humanModel from '../static/model/man.gltf'
+import humanModel from '../static/model/anmatied_man.gltf'
 //@ts-ignore
 import gymModel from '../static/model/gym1_2_0.gltf'
 export default class Core implements UpdateAble {

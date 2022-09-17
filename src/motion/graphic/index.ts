@@ -55,7 +55,9 @@ export default class Graphic {
         this.setBone(positions)
         const ret = new Map()
         this.selfies.forEach((element, idx) => {
-            ret.set(selfies[idx].name, element.set(positions))
+            const val = element.set(positions)
+            if(val != undefined)
+                ret.set(selfies[idx].name, val)
         })
         return ret
     }

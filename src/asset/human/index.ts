@@ -11,7 +11,7 @@ export default class Human extends Loader implements UpdateAble{
 
     public position: Vector3 = new Vector3(0, 0, 0)
     public rotation: number = 0.5
-    public movement: Array<{func: (ms: number) => void, time: number}> = new Array()
+    public movement: Map<string, {func: (ms: number) => void, time: number}> = new Map()
     constructor(
         fileName: string,
         scene: Scene
@@ -24,8 +24,11 @@ export default class Human extends Loader implements UpdateAble{
         this.model = gltf.scene
         this.render(this.scene)
         this.animator = new Animator(gltf)
-        this.animator.animate("Armature|mixamo.com|Layer0")
-        eventListener.add('input-walk', this.walk.bind(this))
+        console.log(this.animator.getAnimations())
+        this.animator.animate("walk")
+        eventListener.add('input-walk', (time: number) => {
+            this.push("walk", this.walk.bind(this), time)
+        })
         // this.movement.push({ func: this.walk.bind(this), time: 20000})
     };
     protected onProgress = (xhr: any) => {
@@ -40,25 +43,38 @@ export default class Human extends Loader implements UpdateAble{
                 e.time -= interval
                 e.func(interval)
             })
-            for(let i = 0; i < this.movement.length; i++){ 
-                if (this.movement[i].time <= 0) { 
-                    this.movement.splice(i, 1); 
-                    i--; 
+            this.movement.forEach((ele, key) => {
+                if(ele.time <= 0) {
+                    this.movement.delete(key)
                 }
-            }
+            })
             this.model.position.set(this.position.x, this.position.y, this.position.z)
             this.model.rotation.set(0, this.rotation, 0)
             this.animator.update(interval)
         }
     }
-    private walkSpeed = 0.0002
-    public walk(ms: number) {
+    private walkSpeed = 0.001
+    public walk(ms: number):void {
         this.position.setX(this.position.x + (ms / (Math.cos(this.model.rotation.y) / this.walkSpeed)))
         const a = this.position.z + (ms / (Math.sin(this.model.rotation.y) / this.walkSpeed))
         if(a != Infinity) {
             this.position.setZ(this.position.z + (ms / (Math.sin(this.model.rotation.y) / this.walkSpeed)))
         }
         
+    }
+    public push(name: string, func: (ms: number) => void, time: number) {
+        if(this.movement.has(name)) {
+            if(this.movement.get(name)!.time > time) {
+                console.log("SEX")
+                return
+            }
+                
+        }
+        else {
+            this.movement.set(name, {
+                func, time
+            })
+        }
     }
 }
 

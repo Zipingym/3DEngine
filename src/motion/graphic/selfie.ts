@@ -34,13 +34,14 @@ export default class Selfie {
         this.meshs.push(temp)
     }
     public set(positions: Array<NormalizedLandmark>) {
+        let jump = false
         this.positions.forEach((element) => {
             if(positions[element].visibility != undefined)
-                if(positions[element].visibility! < 0.8) {
-
+                if(positions[element].visibility! < 0.7) {
+                    jump = true
                 }
         })
-
+        if(jump) return
         const fir = this.positions[0]
         this.meshs[0].position.set(positions[fir].x, positions[fir].y, positions[fir].z)
 
