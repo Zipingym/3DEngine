@@ -99,7 +99,7 @@ axios.post("http://172.30.7.186:8100/api/login", {
   })
   .then((res) => {
     console.log(res);
-    setSession("logged",JSON.stringify(res.data.session.user))
+    setSession("loggedIn",JSON.stringify(res.data.session.user))
     closeAuth()
   }).catch((err) => {
     console.log(err)
