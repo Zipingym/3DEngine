@@ -11,7 +11,7 @@ import * as THREE from "three"
 //@ts-ignore
 import humanModel from '../static/model/anmatied_man.gltf'
 //@ts-ignore
-import gymModel from '../static/model/gym1_2_4.gltf'
+import gymModel from '../static/model/gym1_2_5.gltf'
 import { Camera } from '../three';
 export default class Core implements UpdateAble {
     private scene: Scene

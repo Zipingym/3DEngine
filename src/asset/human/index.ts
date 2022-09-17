@@ -42,6 +42,16 @@ export default class Human extends Loader implements UpdateAble{
                     animateV:"walk"
                 })
             })
+            eventListener.add('input-run', (time: number) => {
+                this.movement.push({
+                    delta: {
+                        pos: 0.005,
+                        rot: 0
+                    },
+                    time,
+                    animateV:"walk"
+                })
+            })
             eventListener.add('input-rotate', (rot: number) => {
                 this.movement.push({
                     delta: {

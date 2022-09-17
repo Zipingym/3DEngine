@@ -1,6 +1,7 @@
 import Loader from "../loader";
 import { Scene } from "../../three";
 import { UpdateAble } from "../../interface";
+import eventListener from "../../global/eventlistener";
 
 export default class World extends Loader implements UpdateAble{
     private scene: Scene
@@ -21,7 +22,12 @@ export default class World extends Loader implements UpdateAble{
             }
         })
         this.render(this.scene)
-        console.log(this.model)
+        this.model.children[29].visible = false
+        eventListener.add("event-game", () => {
+            this.model.children[23].visible = false
+            this.model.children[29].visible = true
+        })
+        
     };
     protected onProgress = (xhr: any) => {
     };

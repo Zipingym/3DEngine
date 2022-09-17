@@ -60,7 +60,7 @@ export default class Graphic {
             if(val != undefined)
                 ret.set(selfies[idx].name, val)
         })
-        ret.set("Spine", -1 * Calculation.TwoDegree(new Vector2(positions[24].y, positions[24].z), new Vector2(positions[24].y + 2, positions[24].z), new Vector2(positions[12].y, positions[12].z)))
+        ret.set("Spine", -1 * Calculation.TwoDegree(new Vector2(positions[24].y, positions[24].x), new Vector2(positions[24].y + 2, positions[24].x), new Vector2(positions[12].y, positions[12].x)))
         return ret
     }
 
