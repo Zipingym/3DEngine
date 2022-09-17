@@ -14,7 +14,6 @@ export default class Animator {
             this.animations.set(v.name, v)
         })
         this.mixer = new AnimationMixer( model.scene );
-        this.mixer.timeScale
     }
     public animate(anime: string) {
         const action = this.mixer.clipAction(this.animations.get(anime)!)
