@@ -17,7 +17,6 @@ export default class World extends Loader implements UpdateAble{
         this.render(this.scene)
     };
     protected onProgress = (xhr: any) => {
-        
     };
     protected onError = (error: any) => {
         console.log(error)

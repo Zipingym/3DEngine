@@ -9,7 +9,7 @@ module.exports = merge(common, {
     entry: path.resolve(__dirname, '../src/dev.ts'),
     devServer: {
         static: {
-            directory: path.join(__dirname, 'dist'),
+            directory: path.join(__dirname, '../dist'),
         },
         historyApiFallback: true,
         port: 3000,

@@ -12,8 +12,6 @@ export default class Animator {
         
         this.model.animations.forEach((v: AnimationClip) => {
             this.animations.set(v.name, v)
-            
-            console.log(v)
         })
         this.mixer = new AnimationMixer( model.scene );
         this.mixer.timeScale
