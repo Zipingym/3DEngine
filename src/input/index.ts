@@ -91,10 +91,11 @@ export default class Input {
           // 두 팔 굽혔을 때
           eventListener.execute('input-walk',1000)
           this.clearIsBand()
-        } else if ((leftArm > 80 && leftArm < 180) && (rightArm <= 120 && rightArm > 30)) { // 왼쪽핌, 오른쪽 굽힘
-            eventListener.execute('input-rotate',0.05)
-        } else if ((leftArm <= 80 && leftArm > 0) && (rightArm > 120 && rightArm < 160)){
-            eventListener.execute('input-rotate',-0.05)
+        } else if (!this.bendLeft && (leftArm > 80 && leftArm < 180) && (rightArm <= 120 && rightArm > 30)) { // 왼쪽핌, 오른쪽 굽힘
+            eventListener.execute('input-rotate',0.1)
+
+        } else if (!this.bendRight && (leftArm <= 80 && leftArm > 0) && (rightArm > 120 && rightArm < 160)){
+            eventListener.execute('input-rotate',-0.1)
         }
 
       }
