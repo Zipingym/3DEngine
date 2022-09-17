@@ -22,7 +22,7 @@ export default class socket{
     ]
 
     constructor() {
-        this.socket = io('http://localhost:8000', {
+        this.socket = io('http://localhost:8001', {
             autoConnect: true,
             transports: ['websocket']
             
