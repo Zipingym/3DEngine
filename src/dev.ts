@@ -2,7 +2,7 @@ import App from "./index";
 import "./static/index.css";
 import axios from "axios";
 
-const app = new App(document.getElementById("app")!);
+
 
 // 로그인 회원가입 팝업
 let signUp: HTMLElement;
@@ -32,6 +32,8 @@ function checkSession() {
   if (!sessionStorage.getItem("loggedIn")) {
     getSignElement();
     popAuth();
+  } else {
+    const app = new App(document.getElementById("app")!);
   }
 }
 
@@ -101,6 +103,7 @@ axios.post("http://172.30.7.186:8100/api/login", {
     console.log(res);
     setSession("loggedIn",JSON.stringify(res.data.session.user))
     closeAuth()
+    const app = new App(document.getElementById("app")!);
   }).catch((err) => {
     console.log(err)
   });

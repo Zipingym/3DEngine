@@ -32,7 +32,6 @@ export default class App {
         requestAnimationFrame(this.update.bind(this))
         const interval = this.performance.getInterval()
         this.performance.start()
-
         this.core.update(interval)
         this.threeDefault.update(interval)
         this.socket.update()
@@ -40,7 +39,8 @@ export default class App {
         this.performance.end()
     }
     private onResult = (result: any) => {
-        console.log(result.degrees)
+        this.input.do(result.degrees)
+        // console.log(result.degrees)
         // this.posture.check(result.poseWorldLandmarks)
         // console.log(result.poseWorldLandmarks)
     }
