@@ -12,7 +12,7 @@ export default class Input {
     let rightArm = degrees.get("RightArm");
 
     if (leftArm && rightArm) {
-      console.log(degrees)
+    //   console.log(degrees)
       // 둘 다 유요할 때
       // 두 팔을 각각 폈는지 확인
       if (!this.bendLeft && leftArm > 150 && leftArm < 165) {
@@ -48,10 +48,10 @@ export default class Input {
           eventListener.execute('input-walk',1000)
           this.clearIsBand()
         } else if ((leftArm > 150 && leftArm < 165) && (rightArm <= 125 && rightArm > 80)) { // 왼쪽핌, 오른쪽 굽힘
-            eventListener.execute('input-rotate',0.2)
+            eventListener.execute('input-rotate',0.005)
 
         } else if ((leftArm <= 90 && leftArm > 50) && (rightArm > 145 && rightArm < 165)){
-            eventListener.execute('input-rotate',-0.2)
+            eventListener.execute('input-rotate',-0.005)
         }
 
       }
@@ -59,7 +59,7 @@ export default class Input {
 
 
     } else {
-        console.log("없음")
+        // console.log("없음")
     }
   }
 

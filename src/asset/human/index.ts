@@ -58,7 +58,7 @@ export default class Human extends Loader implements UpdateAble{
                         pos: 0,
                         rot: rot
                     },
-                    time: 16,
+                    time: 400,
                     animateV: "walk"
                 })
             })
@@ -109,6 +109,12 @@ export default class Human extends Loader implements UpdateAble{
                     buffer.z += z
                 }
                 this.rotation += e.delta.rot
+                if(this.rotation > 2 * Math.PI) {
+                    this.rotation %= 2 * Math.PI
+                }
+                if(this.rotation < 0) {
+                    this.rotation = 2 * Math.PI + this.rotation
+                }
                 // ani = e.animateV
             })
 
@@ -144,21 +150,40 @@ export default class Human extends Loader implements UpdateAble{
         }
     }
     public move(ms: number, move: number) {
-        let x = ms / (Math.sin(this.rotation) / move)
-        let z = ms / (Math.cos(this.rotation) / move)
+        let x = (Math.cos(this.rotation) * move) * ms
+        let z = (Math.sin(this.rotation) * move) * ms
+        // console.log(Math.sin(this.rotation))
         if(x == Infinity || isNaN(x)) x = 0
         if(z == Infinity || isNaN(z)) z = 0
-        if(this.rotation > Math.PI / 2) {
-            return {
-                x: x * -1,z: z * -1
-            }
+        // console.log(x, z)
+        return {
+            z: -x, x: -z
         }
-        else {
-            return {
-                x, z
-            }
-        }
-
+        // if(this.rotation > 0 && this.rotation < Math.PI / 2) {
+        //     console.log(1)
+        //     return {
+        //         x: z, z: x
+        //     }
+        // }
+        // else if(this.rotation > Math.PI / 4 && this.rotation < Math.PI) {
+        //     console.log(2)
+        //     return {
+        //         x: -z, z: -x
+        //     }
+        // }
+        // else if(Math.PI / 2 > 0 && this.rotation < 3 * Math.PI / 2) {
+        //     console.log(3)
+        //     return {
+        //         x: z, z: x
+        //     }
+        // }
+        // else {
+        //     console.log(4)
+        //     return {
+        //         x: z, z: x
+        //     }
+        // }
+        console.log(x, z)
     }
     // public walk(ms: number):void {
     //     this.position.setX()

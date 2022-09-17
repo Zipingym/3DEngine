@@ -31,8 +31,19 @@ export default class socket {
         })
     })
     this.on('vector', (data: any) => {
-        this.core.humans.get(data.name)!.rotation = data.rotation
-        this.core.humans.get(data.name)!.position.set(data.x, data.y, data.z)
+      if(data.name != this.name) {
+        const human = this.core.humans.get(data.name)!
+        const delta = Math.abs(human.position.x - data.x) + Math.abs(human.position.x - data.y) + Math.abs(human.position.x - data.z)
+        human.rotation = data.rotation
+        human.position.set(data.x, data.y, data.z)
+        if(delta == 0) {
+          human.animator?.animate("idle")
+        }
+        else {
+          human.animator?.animate("walk")
+        }
+        
+      }
     })
     this.on('event', (data: any) => {
       // console.log(data)
