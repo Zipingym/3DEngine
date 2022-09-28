@@ -45,20 +45,25 @@ export default class Calculation {
         return vector
     }
     public static TwoDegree(target: Vector2, standard: Vector2, extention: Vector2): number {
-        const yMinusStandard = standard.y - target.y
-        const yMinusExtention = extention.y - target.y
-        const xMinusStandard = standard.x - target.x
-        const xMinusExtention = extention.x - target.x
-        if(xMinusStandard == 0 || xMinusExtention == 0) {
-            if(Calculation.isMiddle(target.x, standard.x, extention.x)) {
-                return Math.PI / 2
-            }
-            else {
-                return 0
-            }
-        }
-        const result = Math.atan((yMinusStandard) / (xMinusStandard)) - Math.atan((yMinusExtention) / (xMinusExtention))
-        return result
+        const result = (Math.atan2(
+            standard.y - target.y, 
+            standard.x - target.x
+        ) - 
+        Math.atan2(
+            extention.y - target.y, 
+            extention.x - target.x
+        ))
+        return result >= 0 ? result : Math.PI / 2 - result
+    }
+    public static ThreeDegree(a: Vector3, b: Vector3, c: Vector3) {
+        const ab = [b.x - a.x, b.y - a.y, b.z - a.z]
+        const bc = [c.x - b.x, c.y - b.y, c.z - b.z]
+        const abVec = Math.sqrt(ab[0] * ab[0] + ab[1] * ab[1] + ab[2] * ab[2]);
+        const bcVec = Math.sqrt(bc[0] * bc[0] + bc[1] * bc[1] + bc[2] * bc[2]);
+        const abNorm = [ab[0] / abVec, ab[1] / abVec, ab[2] / abVec]
+        const bcNorm = [bc[0] / bcVec, bc[1] / bcVec, bc[2] / bcVec]
+        const res = abNorm[0] * bcNorm[0] + abNorm[1] * bcNorm[1] + abNorm[2] * bcNorm[2];
+        return Math.PI - Math.acos(res)
     }
     public static isMiddle(target: number, other1: number, other2: number): boolean {
         return (target > other1 && target < other2) || (target > other2 && target < other1)

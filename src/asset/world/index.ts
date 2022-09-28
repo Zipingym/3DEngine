@@ -27,7 +27,7 @@ export default class World extends Loader implements UpdateAble{
             this.model.children[23].visible = false
             this.model.children[29].visible = true
         })
-        eventListener.execute('event-game')
+        // eventListener.execute('event-game')
         
     };
     protected onProgress = (xhr: any) => {

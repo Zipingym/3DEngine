@@ -21,7 +21,7 @@ export default class Graphic {
     private points: Array<Point> = new Array()
     private lines: Array<Line> = new Array()
     private axis: Axis
-    private selfies: Array<Selfie> = new Array()
+    // private selfies: Array<Selfie> = new Array()
     constructor (
         parent: HTMLElement
     ) {
@@ -45,23 +45,23 @@ export default class Graphic {
         })
         this.axis = new Axis(new Vector3(0, 0, 0))
         this.axis.render(this.scene)
-        selfies.forEach((element, idx) => {
-            this.selfies.push(new Selfie(element.bones))
-            this.selfies[idx].render(this.scene)
-        })
+        // selfies.forEach((element, idx) => {
+        //     this.selfies.push(new Selfie(element.bones))
+        //     this.selfies[idx].render(this.scene)
+        // })
         // this.selfies.push("")
     }
-    public set(positions: NormalizedLandmarkList): Map<string, any> {
+    public set(positions: NormalizedLandmarkList) {
         this.setPoints(positions)
         this.setBone(positions)
-        const ret = new Map()
-        this.selfies.forEach((element, idx) => {
-            const val = element.set(positions)
-            if(val != undefined)
-                ret.set(selfies[idx].name, val)
-        })
-        ret.set("Spine", -1 * Calculation.TwoDegree(new Vector2(positions[24].y, positions[24].x), new Vector2(positions[24].y + 2, positions[24].x), new Vector2(positions[12].y, positions[12].x)))
-        return ret
+        // const ret = new Map()
+        // this.selfies.forEach((element, idx) => {
+        //     const val = element.set(positions)
+        //     if(val != undefined)
+        //         ret.set(selfies[idx].name, val)
+        // })
+        // ret.set("Spine", -1 * Calculation.TwoDegree(new Vector2(positions[24].y, positions[24].x), new Vector2(positions[24].y + 2, positions[24].x), new Vector2(positions[12].y, positions[12].x)))
+        // return ret
     }
 
     private setBone(positions: NormalizedLandmarkList) {

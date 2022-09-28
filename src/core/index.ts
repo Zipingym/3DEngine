@@ -24,7 +24,7 @@ export default class Core implements UpdateAble {
         camera: Camera
     ) {
         this.scene = scene
-        this.humans.set(JSON.parse(sessionStorage.getItem('loggedIn')!).username, new Human(humanModel, this.scene, camera))
+        this.humans.set("123", new Human(humanModel, this.scene, camera))
         this.world = new World(gymModel, this.scene)
     }
     public update = (interval:number) => {
