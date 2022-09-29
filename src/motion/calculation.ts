@@ -68,6 +68,8 @@ export default class Calculation {
     public static isMiddle(target: number, other1: number, other2: number): boolean {
         return (target > other1 && target < other2) || (target > other2 && target < other1)
     }
+    public static RadianToDegree = (radian: number): number => radian * 180 / Math.PI
+    public static DegreeToRadian = (degree: number): number => degree * Math.PI / 180
 
     public static cha(a: number, b: number) {
         if(a > b) {
