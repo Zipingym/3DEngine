@@ -6,6 +6,8 @@ import Motion from '../motion'
 import { Performance } from "../util";
 import { Results } from "../../dist/mediapipe";
 import Input from "../input";
+import { Human } from "../asset";
+import { Vector3 } from "three";
 
 export default class App {
     private root: HTMLElement
@@ -30,6 +32,27 @@ export default class App {
         this.motion = new Motion(ui, this.onResult)
         this.input = new Input()
         this.update()
+
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'w') {
+                Human.Me.controll({
+                    movement: {
+                        pos: Human.Me.dirCalculator(0.01),
+                        rot: 0
+                    },
+                    time: 1000
+                })
+            }
+            else if(e.key === 'a') {
+                Human.Me.controll({
+                    movement: {
+                        pos: new Vector3(0, 0, 0),
+                        rot: -0.01
+                    },
+                    time: 1000
+                })
+            }
+        })
     }
     private update() {
         requestAnimationFrame(this.update.bind(this))

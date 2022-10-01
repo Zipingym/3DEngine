@@ -5,14 +5,15 @@ import { UpdateAble } from "../../interface";
 import { Vector2, Vector3 } from "three";
 import eventListener from "../../global/eventlistener";
 
-export default class Human extends Loader implements UpdateAble{
+export default class Human extends Loader implements UpdateAble {
+    public static Me: Human
     public animator?: Animator
     private scene: Scene
     private camera?: Camera
     private isMe: boolean
     public position: Vector3 = new Vector3(10, 0, 40)
     public rotation: number = 0
-    public movement: Array<{delta: {pos: Vector3 | number, rot: number}, time: number,animateV:string}> = new Array()
+    private movements: Array<animationInfo> = new Array()
     constructor(
         fileName: string,
         scene: Scene,
@@ -26,55 +27,11 @@ export default class Human extends Loader implements UpdateAble{
     }
     protected onLoad = (gltf: any) => {
         this.model = gltf.scene
-        // this.model.position.set(10, 0, 10)
         this.render(this.scene)
         this.animator = new Animator(gltf)
-
-        // this.animator.animate("walk")
         this.animator.animate("idle")
         if(this.isMe) {
-            eventListener.add('input-walk', (time: number) => {
-                this.movement.push({
-                    delta: {
-                        pos: 0.002,
-                        rot: 0
-                    },
-                    time,
-                    animateV:"walk"
-                })
-            })
-            eventListener.add('input-run', (time: number) => {
-                this.movement.push({
-                    delta: {
-                        pos: 0.005,
-                        rot: 0
-                    },
-                    time,
-                    animateV:"walk"
-                })
-            })
-            eventListener.add('input-rotate', (rot: number) => {
-                this.movement.push({
-                    delta: {
-                        pos: 0,
-                        rot: rot
-                    },
-                    time: 400,
-                    animateV: "walk"
-                })
-            })
-
-            // 가만히 있게 해야됨
-            eventListener.add('stop',() => {
-                this.movement.push({
-                    delta:{
-                        pos:0,
-                        rot:0,
-                    },
-                    time:16,
-                    animateV:"idle"
-                })
-            })
+            Human.Me = this
         }
     };
     protected onProgress = (xhr: any) => {
@@ -84,122 +41,62 @@ export default class Human extends Loader implements UpdateAble{
         console.log(error)
     };
     public update: (interval: number) => void = (interval: number) => {
-        if(this.isMe) {
-            this.camera!.position.set(this.position.x, this.position.y + 2, this.position.z)
-            this.camera!.rotation.set(0, this.rotation, 0)
-        }
         if(this.animator != undefined) {
-
-            const buffer = new Vector3(0, 0, 0)
-            this.movement.forEach((e) => {
-                e.time -= interval
-                if(typeof e.delta.pos == "number") {
-                    const {
-                        x, z
-                    } = this.move(interval, e.delta.pos)
-                    buffer.x += x
-                    buffer.z += z
-                }
-                else {
-                    const {
-                        x, y, z
-                    } = e.delta.pos
-                    console.log("number아님",x)
-                    buffer.x += x
-                    buffer.y += y
-                    buffer.z += z
-                }
-                this.rotation += e.delta.rot
-                if(this.rotation > 2 * Math.PI) {
-                    this.rotation %= 2 * Math.PI
-                }
-                if(this.rotation < 0) {
-                    this.rotation = 2 * Math.PI + this.rotation
-                }
-                // ani = e.animateV
-            })
-
-            this.movement.forEach((ele, key) => {
-                for(let i = 0; i < this.movement.length; i++){ 
-                    if (this.movement[i].time <= 0) { 
-                        this.movement.splice(i, 1); 
-                        i--; 
-                    }
-                }
-            })
-
-            
-
-            const dis = buffer.x + buffer.y + buffer.z
+            const { posistion, rotation } = this.calcMovement(interval)
+            const dis = posistion.x + posistion.y + posistion.z
             let ani
-            if(dis == 0) {
-                ani = "idle"
-            }
-            else {
-                ani = "walk"
-            }
+            if(dis == 0) { ani = "idle" }
+            else { ani = "walk" }
             this.animator.animate(ani);
 
-            this.position.x += buffer.x
-            this.position.y += buffer.y
-            this.position.z += buffer.z
+            this.position.x += posistion.x
+            this.position.y += posistion.y
+            this.position.z += posistion.z
+            this.rotation += rotation
 
             this.model.position.set(this.position.x, this.position.y, this.position.z)
-
             this.model.rotation.set(0, this.rotation, 0)
+            if(this.isMe) {
+                this.camera!.position.set(this.position.x, this.position.y + 2, this.position.z)
+                this.camera!.rotation.set(0, this.rotation, 0)
+            }
             this.animator.update(interval)
         }
     }
-    public move(ms: number, move: number) {
-        let x = (Math.cos(this.rotation) * move) * ms
-        let z = (Math.sin(this.rotation) * move) * ms
-        // console.log(Math.sin(this.rotation))
+    private calcMovement(interval: number): {posistion: Vector3, rotation: number} {
+        const posistion = new Vector3(0, 0, 0)
+        const rotation = 0
+        this.movements.forEach((movement: animationInfo, idx) => {
+            this.position.x += movement.movement.pos.x * interval
+            this.position.y += movement.movement.pos.y * interval
+            this.position.z += movement.movement.pos.z * interval
+            this.rotation += movement.movement.rot * interval
+            movement.time -= interval
+            if(movement.time <= 0) {
+                this.movements.splice(idx)
+            }
+        })
+        return {
+            posistion,
+            rotation
+        }
+    }
+    public dirCalculator(move: number): Vector3 {
+        let x = -(Math.sin(this.rotation) * move)
+        let z = -(Math.cos(this.rotation) * move)
         if(x == Infinity || isNaN(x)) x = 0
         if(z == Infinity || isNaN(z)) z = 0
-        // console.log(x, z)
-        return {
-            z: -x, x: -z
-        }
-        // if(this.rotation > 0 && this.rotation < Math.PI / 2) {
-        //     console.log(1)
-        //     return {
-        //         x: z, z: x
-        //     }
-        // }
-        // else if(this.rotation > Math.PI / 4 && this.rotation < Math.PI) {
-        //     console.log(2)
-        //     return {
-        //         x: -z, z: -x
-        //     }
-        // }
-        // else if(Math.PI / 2 > 0 && this.rotation < 3 * Math.PI / 2) {
-        //     console.log(3)
-        //     return {
-        //         x: z, z: x
-        //     }
-        // }
-        // else {
-        //     console.log(4)
-        //     return {
-        //         x: z, z: x
-        //     }
-        // }
-        console.log(x, z)
+        return new Vector3(x, 0, z)
     }
-    // public walk(ms: number):void {
-    //     this.position.setX()
-    //     const a = this.position.z + (ms / (Math.sin(this.model.rotation.y) / this.walkSpeed))
-    //     if(a != Infinity) {
-    //         this.position.setZ(this.position.z + (ms / (Math.sin(this.model.rotation.y) / this.walkSpeed)))
-    //     }
-        
-    // }
+    public controll(animation: animationInfo) {
+        this.movements.push(animation)
+    }
 }
 
 interface animationInfo {
-    name: string,
     movement: {
         pos: Vector3,
         rot: number
     }
+    time: number
 }
