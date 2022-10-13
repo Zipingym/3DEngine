@@ -15,7 +15,7 @@ export default class Core {
             return `http://localhost:3000/mediapipe/${file}`;
         }});
         this.pose.setOptions({
-            modelComplexity: 1,
+            modelComplexity: 0,
             smoothLandmarks: true,
             smoothSegmentation: true,
             minDetectionConfidence: 0.5,

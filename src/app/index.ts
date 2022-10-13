@@ -34,6 +34,44 @@ export default class App {
         this.input = new Input()
         this.update()
 
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'w') {
+                Human.Me.controll({
+                    movement: {
+                        pos: Human.Me.dirCalculator(0.01),
+                        rot: 0
+                    },
+                    time: 1000
+                })
+            }
+            else if(e.key === 'a') {
+                Human.Me.controll({
+                    movement: {
+                        pos: new Vector3(0, 0, 0),
+                        rot: Calculation.DegreeToRadian(0.04)
+                    },
+                    time: 1000
+                })
+            }
+            else if(e.key === 'd') {
+                Human.Me.controll({
+                    movement: {
+                        pos: new Vector3(0, 0, 0),
+                        rot:  Calculation.DegreeToRadian(-0.04)
+                    },
+                    time: 1000
+                })
+            }
+            else if(e.key === 's') {
+                Human.Me.controll({
+                    movement: {
+                        pos: Human.Me.dirCalculator(-0.01),
+                        rot: 0
+                    },
+                    time: 1000
+                })
+            }
+        })
         // document.addEventListener('keydown', (e) => {
         //     if(e.key === 'w') {
         //         Human.Me.controll({
