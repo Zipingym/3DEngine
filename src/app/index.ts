@@ -8,7 +8,7 @@ import { Results } from "../../dist/mediapipe";
 import Input from "../input";
 import { Human } from "../asset";
 import { Vector3 } from "three";
-import Calculation from '../motion/calculation'
+import Calculation from "../motion/calculation";
 
 export default class App {
     private root: HTMLElement
@@ -72,6 +72,26 @@ export default class App {
                 })
             }
         })
+        // document.addEventListener('keydown', (e) => {
+        //     if(e.key === 'w') {
+        //         Human.Me.controll({
+        //             movement: {
+        //                 pos: Human.Me.dirCalculator(0.01),
+        //                 rot: 0
+        //             },
+        //             time: 1000
+        //         })
+        //     }
+        //     else if(e.key === 'a') {
+        //         Human.Me.controll({
+        //             movement: {
+        //                 pos: new Vector3(0, 0, 0),
+        //                 rot: Calculation.DegreeToRadian(-0.01) 
+        //             },
+        //             time: 1000
+        //         })
+        //     }
+        // })
     }
     private update() {
         requestAnimationFrame(this.update.bind(this))

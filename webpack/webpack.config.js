@@ -30,7 +30,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.gltf$/,
+                test: /\.(gltf|glb)$/,
                 use: {
                     loader: 'file-loader'
                 }
