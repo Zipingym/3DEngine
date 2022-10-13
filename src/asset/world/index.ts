@@ -21,6 +21,8 @@ export default class World extends Loader implements UpdateAble{
                 ele.intensity = 1
             }
         })
+        this.scene.receiveShadow = true
+        this.scene.castShadow = true
         this.render(this.scene)
     };
     protected onProgress = (xhr: any) => {
