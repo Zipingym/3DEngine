@@ -22,13 +22,6 @@ export default class World extends Loader implements UpdateAble{
             }
         })
         this.render(this.scene)
-        this.model.children[29].visible = false
-        eventListener.add("event-game", () => {
-            this.model.children[23].visible = false
-            this.model.children[29].visible = true
-        })
-        // eventListener.execute('event-game')
-        
     };
     protected onProgress = (xhr: any) => {
     };
