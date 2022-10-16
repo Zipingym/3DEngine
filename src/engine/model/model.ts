@@ -3,7 +3,7 @@ import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 export default class Model{
     private fileName: string
     private isLoading:boolean = false;
-    private loadedModel?:GLTF;
+    protected loadedModel?:GLTF;
     private afterLoad?: (model: GLTF) => void
     constructor(
         fileName: string,
