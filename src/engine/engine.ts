@@ -1,26 +1,43 @@
 import ThreeDefault from "./three";
 import World from "./world/world";
-import * as THREE from "three"
 import Human from "./human/human";
 import { Models } from "../app/app";
-import { Vector3 } from "three";
-import User from "./human/user";
 
 export default class Engine {
     private threeDefault: ThreeDefault
-    private world:World;
-    private human:Human
-    private currentX: number = 1
+    public worlds:Map<string, World> = new Map()
+    public humans:Map<string,Human> = new Map();
+
+    private models:Models;
     constructor(
         root: HTMLElement,
         models: Models
     ) {
+        this.models = models;
         this.threeDefault = new ThreeDefault(root)
-        this.world = new World(models.worldModel,new THREE.Vector3(0,0,0),this.threeDefault.getScene());
-        this.human = new User(models.humanModel,this.threeDefault.getScene(), this.threeDefault.getCamera())
+        // this.human = new User(models.humanModel,this.threeDefault.getScene(), this.threeDefault.getCamera())
+    }
+    public createHuman(name: string, fileName?:string) {
+        if (fileName === undefined){
+            this.humans.set(name,new Human(this.models.humanModel,this.threeDefault.getScene()))
+        } else {
+            this.humans.set(name,new Human(fileName,this.threeDefault.getScene()))
+        }
+    }
+    public getHuman(name: string): Human | undefined {
+        return this.humans.get(name)
+    }
+    public createWorld(name: string, fileName?:string) {
+        if (fileName === undefined){
+            this.worlds.set(name,new Human(this.models.worldModel,this.threeDefault.getScene()))
+        } else {
+            this.worlds.set(name,new Human(fileName,this.threeDefault.getScene()))
+        } 
+    }
+    public getWorld(name: string): World | undefined {
+        return this.worlds.get(name)
     }
     public update() {
         this.threeDefault.update()
-        this.human.setPosition(new Vector3(this.currentX += 0.01, 1, 1))
     }
 }
