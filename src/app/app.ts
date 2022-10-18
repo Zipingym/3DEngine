@@ -18,6 +18,7 @@ export default class App {
         this.root = root
         this.engine = new Engine(root,models);
         this.ui = new UI(root)
+        this.ui.render()
         this.core = new Core(this.engine, this.ui)
     }
 }

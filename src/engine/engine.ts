@@ -15,7 +15,6 @@ export default class Engine {
     ) {
         this.models = models;
         this.threeDefault = new ThreeDefault(root)
-        // this.human = new User(models.humanModel,this.threeDefault.getScene(), this.threeDefault.getCamera())
     }
     public createHuman(name: string, fileName?:string) {
         if (fileName === undefined){

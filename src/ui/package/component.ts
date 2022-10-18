@@ -7,9 +7,8 @@ export default abstract class Component {
         parent: HTMLElement
     ) {
         this.parent = parent
-        this.render()
     }
-    private render() {
+    public render() {
         const nodes = new DOMParser().parseFromString(this.html, 'text/html').body.childNodes
         nodes.forEach((node) => {
             this.nodes.push(node)

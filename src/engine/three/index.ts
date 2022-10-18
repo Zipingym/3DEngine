@@ -21,7 +21,7 @@ export default class ThreeDefault {
         this.control = new OrbitControls(this.camera, this.renderer.domElement)
         this.light = new Light()
         this.light.addLight(this.scene)
-
+        this.resize()
         window.addEventListener('resize', this.resize.bind(this), false)
     }
     public update = () => {

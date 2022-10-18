@@ -1,16 +1,11 @@
 @font-face {
     font-family: 'SpoqaHanSansNeo';
-    src: url('./fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+    src: url('../static/fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
 }
 body {
 	padding: 0;
 	margin: 0;
 	overflow-x:hidden;
-}
-#app {
-	width: 100%;
-	height: 100vh;
-	position: relative;
 }
 * {
 	margin: 0;

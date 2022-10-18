@@ -7,8 +7,9 @@ export default class Renderer extends THREE.WebGLRenderer{
 		})
 		this.setClearColor(0xff0000, 1.0)
 		this.setSize(width, height)
-		this.shadowMap.enabled = true
 		this.outputEncoding = THREE.sRGBEncoding
+		this.domElement.style.width = "100%";
+		this.domElement.style.height = "100%"
 		parent.appendChild(this.domElement)
 	}
 }
