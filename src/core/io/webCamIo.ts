@@ -48,6 +48,9 @@ export default class WebCamIo implements inputAble {
         this.pose.onResults((result: Results) => {
             const points = result.poseWorldLandmarks
             const jointDegrees = new Map()
+            if(points == undefined) {
+                return
+            }
             WebCamIo.joints.forEach((value: Array<number>, key: string) => {
                 if((points[value[0]].visibility! + 
                     points[value[1]].visibility! + 

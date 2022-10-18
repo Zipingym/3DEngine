@@ -1,7 +1,10 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "es6",
         "module": "commonjs",
-        "strict": true
+        "strict": true,
+        "typeRoots": ["src/@types"],
+        "alwaysStrict": true,
+        "esModuleInterop": true,
     }
 }

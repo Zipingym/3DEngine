@@ -1,4 +1,4 @@
-import { LandmarkList } from "@mediapipe/pose";
+import { LandmarkList, NormalizedLandmark } from "@mediapipe/pose";
 import { Vector3 } from "three";
 import ThreeDefault from "../../../engine/three";
 import Line from "./line";
@@ -18,6 +18,7 @@ export default class Graphic {
         element.style.cssText = "position: absolute; top: 210px; left: 0; width: 360px; height: 240px; z-index:10;"
         this.container = this.root.appendChild(element)
         this.ThreeDefault = new ThreeDefault(element)
+        this.ThreeDefault.getCamera().position.set(0, 0, 100)
         for(let i = 0; i < Graphic.pointsCount; i++) {
             this.points.push(new Point(new Vector3(0, 0, 0)))
             this.points[i].render(this.ThreeDefault.getScene())
@@ -29,17 +30,43 @@ export default class Graphic {
         })
     }
     /**점 업데이트 */
-    public update(points: LandmarkList){
-        // console.log(points)
+    public update(points: LandmarkList) {
+        this.points.forEach((element: Point, idx: number) => {
+            let color: number;
+            if(points[idx].visibility === undefined) {
+                color = 0xFF0000
+            }
+            else if(points[idx].visibility! < 0.9) {
+                color = 0xFF0000
+            }
+            else {
+                color = 0x00AA00
+            }
+            element.set(
+                Graphic.LandmarkToVec3(points[idx]),
+                color
+            )
+        })
+        Graphic.bones.forEach((element, idx) => {
+            this.lines[idx].set([
+                Graphic.LandmarkToVec3(points[element.parent]),
+                Graphic.LandmarkToVec3(points[element.child]),
+            ])
+        })
         this.ThreeDefault.update();
     }
 
-    private drawPoints(){
+    private drawPoints() {
 
     }
 
-
-
+    private static LandmarkToVec3(landMark: NormalizedLandmark): Vector3 {
+        return new Vector3(
+            landMark.x * 100,
+            landMark.y * -100,
+            landMark.z * 100
+        )
+    }
     public static bones: Array<boneInfo> = [
         {
             parent: 11,
