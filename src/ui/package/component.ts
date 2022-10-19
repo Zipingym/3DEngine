@@ -1,5 +1,5 @@
-export default abstract class Component {
-    protected abstract html:string
+export default class Component {
+    protected html:string = ""
     protected children: Array<Component> = new Array()
     private nodes: Array<ChildNode> = new Array()
     private parent: HTMLElement
@@ -8,8 +8,9 @@ export default abstract class Component {
     ) {
         this.parent = parent
     }
-    public render() {
-        const nodes = new DOMParser().parseFromString(this.html, 'text/html').body.childNodes
+    public render(html?: string) {
+        const target = html ? html : this.html
+        const nodes = new DOMParser().parseFromString(target, 'text/html').body.childNodes
         nodes.forEach((node) => {
             this.nodes.push(node)
             this.parent.appendChild(node)
@@ -28,8 +29,9 @@ export default abstract class Component {
             child.destructor()
         })
     }
-    public appendChild(child: Component) {
+    public appendChild(child: Component): Component {
         this.children.push(child)
+        return child
     }
     public _update() {
         this.update()
@@ -39,5 +41,9 @@ export default abstract class Component {
     }
     public update() {
 
+    }
+    public getAsClassName(className: string): HTMLElement {
+        //@ts-ignore
+        return this.parent.getElementsByClassName(className)[0]
     }
 }

@@ -1,3 +1,4 @@
+import WebcamIoUi from "../../ui/webcamIo/webcamIo"
 import { inputAble, outputAble } from "../interface"
 import KeyboardIo from "./keyboardIo"
 import NetworkIo from "./networkIo"
@@ -15,13 +16,12 @@ export default class IO implements inputAble, outputAble {
 
     constructor(
         recieve:(inputType: number, namespace: string, value: any) => void,
-        send:(inputType: number, namespace: string, value: any) => void
+        webcamUi: WebcamIoUi
     ) {
         this.recieve = recieve
-        this.send = send
         this.keyBoardModule = new KeyboardIo(IO.KeyBoard, recieve)
-        this.webCamModule = new WebCamIo(IO.Webcam, recieve)
-        this.networkIo = new NetworkIo(IO.Network, recieve, "localhost:3000")
+        this.webCamModule = new WebCamIo(IO.Webcam, recieve, webcamUi)
+        this.networkIo = new NetworkIo(IO.Network, recieve, "10.80.162.183:8400")
     }
 
     public recieve: (inputType: number, namespace: string, value: any) => void

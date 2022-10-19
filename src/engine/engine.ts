@@ -14,7 +14,7 @@ export default class Engine {
         models: Models
     ) {
         this.models = models;
-        this.threeDefault = new ThreeDefault(root)
+        this.threeDefault = new ThreeDefault(root, { orbitcontrol: root } )
     }
     public createHuman(name: string, fileName?:string) {
         if (fileName === undefined){

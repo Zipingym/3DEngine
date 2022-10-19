@@ -9,7 +9,8 @@ export default class Renderer extends THREE.WebGLRenderer{
 		this.setSize(width, height)
 		this.outputEncoding = THREE.sRGBEncoding
 		this.domElement.style.width = "100%";
-		this.domElement.style.height = "100%"
+		this.domElement.style.height = "100%";
+		this.domElement.style.position = "absolute"
 		parent.appendChild(this.domElement)
 	}
 }

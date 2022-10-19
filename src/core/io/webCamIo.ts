@@ -3,6 +3,7 @@ import VideoControl from './videoControl'
 import { GpuBuffer, LandmarkList, NormalizedLandmarkList, Pose, Results } from "@mediapipe/pose"
 import { Vector3 } from "three";
 import Graphic from "./graphic/graphic";
+import WebcamIoUi from "../../ui/webcamIo/webcamIo";
 export default class WebCamIo implements inputAble {
     private inputType: number
     public recieve:(inputType: number, namespace: string, value: any) => void
@@ -26,11 +27,12 @@ export default class WebCamIo implements inputAble {
     ])
     constructor(
         inputType: number,
-        recieve:(inputType: number, namespace: string, value: any) => void
+        recieve:(inputType: number, namespace: string, value: any) => void,
+        webcamUi: WebcamIoUi
     ) {
         this.recieve = recieve
         this.inputType = inputType
-        this.graphic = new Graphic()
+        this.graphic = new Graphic(webcamUi.getContainerElement())
         this.pose = new Pose({locateFile: (file) => {
             return `http://localhost:3000/mediapipe/${file}`;
         }})
@@ -42,7 +44,7 @@ export default class WebCamIo implements inputAble {
             minTrackingConfidence: 0.5,
         })
         this.video = new VideoControl(
-            document.getElementById('app')!,
+            webcamUi.getVideoElement(),
             async (arg: HTMLVideoElement) => { await this.pose.send({image: arg}) },
         )
         this.pose.onResults((result: Results) => {

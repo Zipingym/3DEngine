@@ -26,7 +26,8 @@ module.exports = {
                                 }
                             }
                         }, 
-                        'sass-loader'],
+                        'sass-loader'
+                    ],
             },
             {
                 test: /\.(png|jpe?g|gif|svg)$/,

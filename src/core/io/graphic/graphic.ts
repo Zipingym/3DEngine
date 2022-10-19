@@ -5,20 +5,16 @@ import Line from "./line";
 import Point from "./point";
 
 export default class Graphic {
-    private root = document.getElementById('app')!;
-    private container: HTMLElement
     private ThreeDefault:ThreeDefault
     private static pointsCount: number = 33;
     private points: Array<Point> = new Array()
     private lines: Array<Line> = new Array()
     constructor(
-
+        parent: HTMLElement
     ){
-        const element = document.createElement('div')
-        element.style.cssText = "position: absolute; top: 210px; left: 0; width: 360px; height: 240px; z-index:10;"
-        this.container = this.root.appendChild(element)
+        const element = parent
         this.ThreeDefault = new ThreeDefault(element)
-        this.ThreeDefault.getCamera().position.set(0, 0, 100)
+        this.ThreeDefault.getCamera().position.set(0, 50, 100)
         for(let i = 0; i < Graphic.pointsCount; i++) {
             this.points.push(new Point(new Vector3(0, 0, 0)))
             this.points[i].render(this.ThreeDefault.getScene())
@@ -54,10 +50,6 @@ export default class Graphic {
             ])
         })
         this.ThreeDefault.update();
-    }
-
-    private drawPoints() {
-
     }
 
     private static LandmarkToVec3(landMark: NormalizedLandmark): Vector3 {

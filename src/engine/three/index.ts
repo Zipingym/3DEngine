@@ -5,27 +5,36 @@ import Renderer from "./Renderer";
 import Scene from "./Scene";
 import Light from './Light'
 export default class ThreeDefault {
+    private static defaultOption:Option = { }
+    private option: Option
     private scene:Scene
     private camera:Camera
     private renderer:Renderer
     private light:Light
-    private control:OrbitControls
+    private control?:OrbitControls
     private parent: HTMLElement
     constructor(
-        parent: HTMLElement
+        parent: HTMLElement,
+        option?: Option
     ) {
         this.parent = parent
+        this.option = option ? option : ThreeDefault.defaultOption
         this.scene = new Scene()
         this.camera = new Camera(95, this.parent.clientWidth / this.parent.clientHeight)
         this.renderer = new Renderer(this.parent.clientWidth, this.parent.clientHeight, this.parent)
-        this.control = new OrbitControls(this.camera, this.renderer.domElement)
         this.light = new Light()
         this.light.addLight(this.scene)
+        this.applyOption()
         this.resize()
         window.addEventListener('resize', this.resize.bind(this), false)
     }
+    private applyOption = () => {
+        if(this.option.orbitcontrol != undefined) {
+            this.control = new OrbitControls(this.camera, this.option.orbitcontrol)
+        }
+    }
     public update = () => {
-        this.control.update()
+        if(this.control) this.control.update()
         this.render()
     }
     public getScene() {
@@ -44,5 +53,7 @@ export default class ThreeDefault {
         this.render()
     }
 }
-
+export interface Option {
+    orbitcontrol?: HTMLElement
+}
 export { Camera, Renderer, Scene, Light }

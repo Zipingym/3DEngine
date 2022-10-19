@@ -10,6 +10,7 @@
         "noImplicitAny": true,
         "sourceMap": true,
         "esModuleInterop": true,
+        "typeRoots": ["src/@types", "node_modules/@types"]
     },
     "include": ["**/*.ts"],
     "exclude": ["node_modules"]
