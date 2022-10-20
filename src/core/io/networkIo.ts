@@ -4,7 +4,7 @@ import { inputAble, outputAble } from "../interface";
 export default class NetworkIo implements inputAble, outputAble {
     private inputType: number
     private socket: Socket
-    private namespaces = new Array("connect", "test")
+    private namespaces = new Array("connect", "test", "onconnect", "join", "control", "exit")
     constructor(
         inputType:number,
         recieve: (inputType: number, namespace: string, value: any) => void,

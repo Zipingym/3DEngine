@@ -9,8 +9,8 @@ export default class KeyboardIo implements inputAble {
     ) {
         this.recieve = recieve
         this.inputType = inputType
-        window.addEventListener('keypress', (e: KeyboardEvent) => {
-            recieve(inputType, "keyboard", e)
+        window.addEventListener('keydown', (e: KeyboardEvent) => {
+            recieve(inputType, "keydown", e)
         })
     }
 }

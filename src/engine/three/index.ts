@@ -34,7 +34,7 @@ export default class ThreeDefault {
         }
     }
     public update = () => {
-        if(this.control) this.control.update()
+        // if(this.control) this.control.update()
         this.render()
     }
     public getScene() {

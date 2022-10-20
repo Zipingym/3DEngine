@@ -37,7 +37,7 @@ export default class WebCamIo implements inputAble {
             return `http://localhost:3000/mediapipe/${file}`;
         }})
         this.pose.setOptions({
-            modelComplexity: 0,
+            modelComplexity: 2,
             smoothLandmarks: true,
             smoothSegmentation: true,
             minDetectionConfidence: 0.5,
