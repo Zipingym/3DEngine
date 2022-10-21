@@ -9,7 +9,7 @@ export default class rightDumbbellCurlAnalysis extends Analysis {
 
     public inputValue = (joints: Map<string, number>) => {
         if(this.checkUndefined(joints)) return false
-        if(Analysis.RadianToDegree(joints.get(Analysis.rightArm)!) < 120 &&
+        if(Analysis.RadianToDegree(joints.get(Analysis.rightArm)!) < 100 &&
         !this.flag){
             this.flag = true
         } else if (this.flag && Analysis.RadianToDegree(joints.get(Analysis.rightArm)!) >= 120){

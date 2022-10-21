@@ -8,28 +8,18 @@ import Human from "./human";
 export default class User extends Human {
     public camera: Camera;
     private raycaster: Raycaster
-    private bottomCamera: Camera
     private world: Model
-    private root: HTMLElement
-    private three: ThreeDefault
     constructor (
         fileName:string,
         scene:Scene,
         camera:Camera,
-        world: Model,
-        root: HTMLElement,
-        three: ThreeDefault
+        world: Model
     ) {
         super(fileName,scene)
-        this.root = root
         this.camera = camera
         this.world = world
-        this.three = three
         this.raycaster = new Raycaster()
-
-        this.bottomCamera = new Camera(100, 1)
-        this.bottomCamera.rotation.set(-Math.PI / 2, 0, 0)
-        // three.camera = this.bottomCamera
+        this.raycaster.far = 10
     }
     protected afterLoad(model: GLTF): void {
         this.scene.add(model.scene)   
@@ -39,22 +29,19 @@ export default class User extends Human {
     }
     setPosition = (position: Vector3) => {
         if(this.loadedModel != undefined) {
-            // const { x, y, z } = this.loadedModel.scene.position
+            const { x, y, z } = this.loadedModel.scene.position
             this.loadedModel.scene.position.set(position.x, position.y, position.z)
-            // this.raycaster.ray.direction = new Vector3(0, -1, 0)
-            // this.raycaster.ray.recast
-            // this.raycaster.far = 10
-            this.raycaster.ray = new Ray(position, new Vector3(0, -1, 0))
             if(this.world.getIsLoading()) {
-                console.log(this.raycaster.intersectObjects(this.world.getLoadedModel()!.scene.children).map(element => element.object.name).filter((element) => element.includes("Plane048")).length)
-            }
-            // this.camera.rotation.set(x, y, z)
-            if(false) {
-                // this.loadedModel.scene.position.set(x, y, z)
+                this.raycaster.ray = new Ray(position, new Vector3(0, -1, 0))
+                if(this.raycaster.intersectObjects(this.world.getLoadedModel()!.scene.children).map(element => element.object.name).filter((element) => element.includes("Plane048")).length == 0) {
+                    this.loadedModel.scene.position.set(x, y, z)
+                }
+                else {
+                    this.camera.position.set(position.x, position.y + 1.5, position.z)
+                }
             }
             else {
                 this.camera.position.set(position.x, position.y + 1.5, position.z)
-                this.bottomCamera.position.set(position.x, position.y + 1.5, position.z)
             }
         }
     }

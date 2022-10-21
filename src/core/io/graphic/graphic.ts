@@ -32,7 +32,7 @@ export default class Graphic {
             if(points[idx].visibility === undefined) {
                 color = 0xFF0000
             }
-            else if(points[idx].visibility! < 0.9) {
+            else if(points[idx].visibility! < 0.75) {
                 color = 0xFF0000
             }
             else {

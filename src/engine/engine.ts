@@ -29,7 +29,7 @@ export default class Engine {
     public createHuman(name: string, fileName?:string, camera?: boolean) {
         fileName = fileName ?? this.models.humanModel
         if(camera) 
-            this.humans.set(name, new User(this.models.humanModel,this.threeDefault.getScene(), this.threeDefault.getCamera(), this.getWorld("default")!, this.root, this.threeDefault))
+            this.humans.set(name, new User(this.models.humanModel,this.threeDefault.getScene(), this.threeDefault.getCamera(), this.getWorld("default")!))
         else 
             this.humans.set(name, new Human(this.models.humanModel,this.threeDefault.getScene()))
     }
