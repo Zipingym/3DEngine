@@ -4,6 +4,7 @@ import AnalysisCore from "./analysis/analysisCore";
 import HumanControl from "./humanControl/humanController";
 import IO from "./io/io";
 import Performance from "../util/performance";
+import { Euler, Vector3 } from "three";
 export default class Core {
     private engine: Engine
     private ui: UI
@@ -15,7 +16,9 @@ export default class Core {
     constructor(
         engine: Engine,
         ui: UI,
+        name: string
     ) {
+        this.myName = name
         this.engine = engine
         this.engine.createWorld("default")
         this.engine.createHuman(this.myName, undefined, true)
@@ -50,9 +53,16 @@ export default class Core {
         }
     }
     private onNetworkInput(namespace: string, value: any) {
-        if(namespace === "onconnect") {
-            value.users.forEach((user: string) => {
-                this.engine.createHuman(user)
+        if(namespace === "connect") {
+            console.log(this.myName)
+            this.output(IO.Network, "login", {name: this.myName})
+        }
+        else if(namespace === "onconnect") {
+            value.users.forEach((user: any) => {
+                this.engine.createHuman(user.name)
+                // this.engine.getHuman(user.name)!.setPosition(new Vector3(user.position.x, user.position.y, user.position.z))
+                // this.engine.getHuman(user.name)!.setRotation(new Euler(user.rotation.x, user.rotation.y, user.rotation.z))
+                // this.engine.getHuman(user.name)!.setScale(new Vector3(user.scale.x, user.scale.y, user.scale.z))
             })
         }
         else if(namespace === "join") {
@@ -63,14 +73,14 @@ export default class Core {
             if(human != undefined) {
                 (value.functionCode === HumanControl.UpdatePositionCode ? 
                 human.updatePosition : value.functionCode === HumanControl.UpdateRotationCode ?
-                human.updateRotation : human.updateScale)(value.value, value.duration)
+                human.updateRotation : human.updateScale).bind(human)(value.value, value.duration)
             }
         }
         else if(namespace === "exit") {
 
         }
     }
-    
+
     private update() {
         requestAnimationFrame(this.update.bind(this))
         this.performance.start()

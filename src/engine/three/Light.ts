@@ -8,7 +8,7 @@ export default class Light {
 
     ){
         const color = 0xdddddd;
-        const intensity = 0.5; // 강도
+        const intensity = 0.9; // 강도
         this.directionalLight = new THREE.DirectionalLight(color, intensity);
         this.ambientLight = new THREE.AmbientLight(color, intensity)
     }

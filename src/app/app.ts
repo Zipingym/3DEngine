@@ -13,11 +13,12 @@ export default class App {
     private core: Core
     constructor (
         root: HTMLElement,
+        name: string,
         models: Models
     ) {
         this.root = root
         this.engine = new Engine(root, models);
         this.ui = new UI(root)
-        this.core = new Core(this.engine, this.ui)
+        this.core = new Core(this.engine, this.ui, name)
     }
 }

@@ -1,16 +1,13 @@
+import { Scene } from 'three';
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
-
 export default class Model{
     private fileName: string
     private isLoading:boolean = false;
     protected loadedModel?:GLTF;
-    private afterLoad?: (model: GLTF) => void
     constructor(
-        fileName: string,
-        afterLoad?: (model: GLTF) => void
+        fileName: string
     ) {
         this.fileName = fileName
-        this.afterLoad = afterLoad
         const gltfLoader = new GLTFLoader()
         gltfLoader.load(fileName,
             this.onLoad.bind(this),
@@ -27,6 +24,9 @@ export default class Model{
     }
     protected onError(error:any) {
         console.log(error)
+    }
+    protected afterLoad(model: GLTF) {
+        
     }
     public getIsLoading = () => this.isLoading
     public getLoadedModel = () => this.loadedModel

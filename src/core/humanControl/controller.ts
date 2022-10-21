@@ -16,7 +16,7 @@ export default abstract class Controller {
     protected dirCalculator(move: number): Vector3 {
         if(this.human.getIsLoading()) {
             const rotation:number = this.human.getRotation()!.y
-            let x = -(Math.sin(rotation) * move)
+            let x = (Math.sin(rotation) * move)
             let z = (Math.cos(rotation) * move)
             if(x == Infinity || isNaN(x)) x = 0
             if(z == Infinity || isNaN(z)) z = 0
@@ -36,7 +36,7 @@ export default abstract class Controller {
         this.human.updateRotation(value, duration)
         return {
             functionCode: Controller.UpdateRotationCode,
-            value: value,
+            value: new Vector3(value.x, value.y, value.z),
             duration: duration ?? 0
         }
     }

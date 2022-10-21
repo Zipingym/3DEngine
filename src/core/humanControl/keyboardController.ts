@@ -10,13 +10,20 @@ export default class KeyboardController extends Controller {
     }
     public control: (code: number, value: any) => ControlInfo | undefined = (code: number, value: KeyboardEvent) => {
         if(value.code === "KeyW") {
-            this.humanUpdatePosition(this.dirCalculator(2), 500)
+            return this.humanUpdatePosition(this.dirCalculator(2), 500)
         }
         else if(value.code === "KeyA") {
-            this.humanUpdateRotation(new Euler(0, -0.5, 0), 300)
+            return this.humanUpdateRotation(new Euler(0, 0.5, 0), 300)
         }
         else if(value.code === "KeyD") {
-            this.humanUpdateRotation(new Euler(0, 0.5, 0), 300)
+            return this.humanUpdateRotation(new Euler(0, -0.5, 0), 300)
+        }
+        else if(value.code === "KeyV") {
+            //@ts-ignore
+            console.log(this.human.camera.rotation)
+        }
+        else {
+            console.log(value)
         }
         return undefined
     }

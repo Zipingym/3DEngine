@@ -2,24 +2,30 @@ import moveAble from "../interface/moveAble";
 import Model from "../model";
 import {
     Vector3,
-    Euler
+    Euler,
+    Box3
 } from 'three'
 import { Scene } from "../three";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
+import Collusion from "../collusion/collusion";
 
 export default class Human extends Model implements moveAble {
     private static PositionCode: number = 0
     private static RotationCode: number = 1
     private static ScaleCode: number = 2
+    protected scene: Scene
+    public box?: Box3
     private updateQueue: Array<UpdateInfo> = new Array()
     constructor(
         fileName: string,
-        scene:Scene,
+        scene:Scene
     ) {
-        super(fileName, (gltf: GLTF) => {
-            scene.add(gltf.scene)
-        })
+        super(fileName)
+        this.scene = scene
     }
+    protected afterLoad(model: GLTF): void {
+        this.scene.add(model.scene) 
+    }  
     getPosistion = () => this.loadedModel?.scene.position
     getRotation = () => this.loadedModel?.scene.rotation
     getScale = () => this.loadedModel?.scene.scale

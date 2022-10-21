@@ -8,7 +8,7 @@ export default class ThreeDefault {
     private static defaultOption:Option = { }
     private option: Option
     private scene:Scene
-    private camera:Camera
+    public camera:Camera
     private renderer:Renderer
     private light:Light
     private control?:OrbitControls
