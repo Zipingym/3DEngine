@@ -37,11 +37,11 @@ export default class User extends Human {
                     this.loadedModel.scene.position.set(x, y, z)
                 }
                 else {
-                    this.camera.position.set(position.x, position.y + 1.5, position.z)
+                    this.camera.position.set(position.x - 3, position.y + 3, position.z)
                 }
             }
             else {
-                this.camera.position.set(position.x, position.y + 1.5, position.z)
+                this.camera.position.set(position.x - 3, position.y + 3, position.z)
             }
         }
     }
@@ -49,6 +49,8 @@ export default class User extends Human {
         if(this.loadedModel != undefined) {
             this.loadedModel.scene.rotation.set(rotation.x, rotation.y, rotation.z, rotation.order)
             this.camera.rotation.set(0, rotation.y - Math.PI, 0, rotation.order)
+            // console.log(this.loadedModel.animations)
+            this.camera.lookAt(this.loadedModel.scene.position)
         }
     }
     setScale = (scale: Vector3) => {

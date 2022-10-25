@@ -33,7 +33,6 @@ export default class WebcamController extends Controller {
                 this.human.updateRotation(new Euler(0, -0.3, 0), 400)
             }
         }
-        console.log(value)
         return undefined
     }
 }
