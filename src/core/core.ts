@@ -5,6 +5,7 @@ import UserControl from "./humanControl/userController";
 import IO from "./io/io";
 import Performance from "../util/performance";
 import { Euler, Vector3 } from "three";
+import NetworkIo from "./io/networkIo";
 export default class Core {
     private engine: Engine
     private ui: UI
@@ -13,6 +14,9 @@ export default class Core {
     private analysisCore: AnalysisCore = new AnalysisCore();
     private myController: UserControl
     private myName:string = "park";
+
+    private intervalStack:number = 0;
+
     constructor(
         engine: Engine,
         ui: UI,
@@ -72,8 +76,6 @@ export default class Core {
             this.engine.createHuman(value.name)
         }
         else if(namespace === "out") {
-            // console.log(value.name)
-            // this.engine.
         }
         else if(namespace === "control") {
             console.log(value)
@@ -87,12 +89,38 @@ export default class Core {
         else if(namespace === "exit") {
 
         }
+        else if(namespace === "sync") {
+            const human = this.engine.getHuman(value.name)
+            const {
+                position,
+                rotation,
+                scale
+            } = value
+            human?.setPosition(new Vector3(position.x, position.y, position.z))
+            human?.setRotation(new Euler(rotation._x, rotation._y, rotation._z))
+        }
+    }
+
+    private checkInterval(interval:number){
+        this.intervalStack += interval
+        if (this.intervalStack >= 1000){
+            const me = this.engine.getHuman(this.myName);
+            const sendInfo = {
+                position:me?.getPosistion(),
+                rotation:me?.getRotation(),
+                scale:me?.getScale(),
+            }
+            this.io.send(IO.Network,"sync",sendInfo);
+            this.intervalStack = 0
+        }
     }
 
     private update() {
         requestAnimationFrame(this.update.bind(this))
         this.performance.start()
         const interval = this.performance.getInterval()
+        this.checkInterval(interval)
+
         this.engine.update(interval)
         // console.log(1000 / interval)
         this.performance.end()
