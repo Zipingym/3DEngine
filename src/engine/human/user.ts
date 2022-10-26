@@ -11,19 +11,14 @@ export default class User extends Human {
     public static thirdPerson = 3
     public camera: Camera;
     private mode: number = User.thirdPerson
-    private raycaster: Raycaster
-    private world: Model
     constructor (
         fileName:string,
         scene:Scene,
         camera:Camera,
         world: Model
     ) {
-        super(fileName,scene)
-        this.camera = camera
-        this.world = world
-        this.raycaster = new Raycaster()
-        this.raycaster.far = 10
+        super(fileName, scene, world)
+        this.camera = camera 
     }
     protected afterLoad(model: GLTF): void {
         this.scene.add(model.scene)
