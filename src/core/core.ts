@@ -87,6 +87,7 @@ export default class Core {
         this.performance.start()
         const interval = this.performance.getInterval()
         this.engine.update(interval)
+        // console.log(1000 / interval)
         this.performance.end()
     }
     private output: (inputType: number, namespace: string, value: any) => void
