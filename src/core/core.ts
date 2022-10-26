@@ -1,7 +1,7 @@
 import Engine from "../engine/engine";
 import UI from "../ui/ui";
 import AnalysisCore from "./analysis/analysisCore";
-import HumanControl from "./humanControl/humanController";
+import UserControl from "./humanControl/userController";
 import IO from "./io/io";
 import Performance from "../util/performance";
 import { Euler, Vector3 } from "three";
@@ -11,7 +11,7 @@ export default class Core {
     private performance: Performance
     private io: IO
     private analysisCore: AnalysisCore = new AnalysisCore();
-    private myController: HumanControl
+    private myController: UserControl
     private myName:string = "park";
     constructor(
         engine: Engine,
@@ -28,7 +28,8 @@ export default class Core {
         this.io = new IO(this.recieve.bind(this), this.ui.webcamIoUi)
         this.output = this.io.send.bind(this)
 
-        this.myController = new HumanControl(this.engine.getHuman(this.myName)!)
+        //@ts-ignore
+        this.myController = new UserControl(this.engine.getHuman(this.myName))
 
         this.performance = new Performance()
         this.update()
@@ -41,13 +42,13 @@ export default class Core {
     }
 
     private onWebcamInput(namespace: string, value: any) {
-        const result = this.myController.control(HumanControl.webcamControl, this.analysisCore.inputValue(value.jointDegrees))
+        const result = this.myController.control(UserControl.webcamControl, this.analysisCore.inputValue(value.jointDegrees))
         if(result != undefined) {
             this.output(IO.Network, "control", { name: this.myName, ...result })
         }
     }
     private onKeyboardInput(namespace: string, value: any) {
-        const result = this.myController.control(HumanControl.keyboardControl, value)
+        const result = this.myController.control(UserControl.keyboardControl, value)
         if(result != undefined) {
             this.output(IO.Network, "control", result)
         }
@@ -71,8 +72,8 @@ export default class Core {
         else if(namespace === "control") {
             const human = this.engine.getHuman(value.name)
             if(human != undefined) {
-                (value.functionCode === HumanControl.UpdatePositionCode ? 
-                human.updatePosition : value.functionCode === HumanControl.UpdateRotationCode ?
+                (value.functionCode === UserControl.UpdatePositionCode ? 
+                human.updatePosition : value.functionCode === UserControl.UpdateRotationCode ?
                 human.updateRotation : human.updateScale).bind(human)(value.value, value.duration)
             }
         }

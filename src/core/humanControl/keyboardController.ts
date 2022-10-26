@@ -1,12 +1,15 @@
 import { Euler } from "three"
 import Human from "../../engine/human/human"
+import User from "../../engine/human/user"
 import Controller, { ControlInfo } from "./controller"
 
 export default class KeyboardController extends Controller {
+    private user: User
     constructor (
-        human: Human
+        human: User
     ) {
         super(human)
+        this.user = human
     }
     public control: (code: number, value: any) => ControlInfo | undefined = (code: number, value: KeyboardEvent) => {
         if(value.code === "KeyW") {
@@ -19,8 +22,7 @@ export default class KeyboardController extends Controller {
             return this.humanUpdateRotation(new Euler(0, -0.5, 0), 300)
         }
         else if(value.code === "KeyV") {
-            //@ts-ignore
-            console.log(this.human.camera.rotation)
+            this.user.toggleMode()
         }
         else {
             console.log(value)

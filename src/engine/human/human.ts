@@ -110,19 +110,19 @@ export default class Human extends Model implements moveAble {
             const delta = (updateInfo.current > updateInfo.duration ? interval - (updateInfo.current - updateInfo.duration) : interval) / updateInfo.duration
             const { x, y, z } = updateInfo.everyMillsecond
             if(updateInfo.code === Human.PositionCode) {
-                updatePosistion.addVectors(updatePosistion, new Vector3(x * delta, y * delta, z * delta))
+                updatePosistion.add(new Vector3(x * delta, y * delta, z * delta))
             }
             else if(updateInfo.code === Human.RotationCode) {
                 updateRotation.set(updateRotation.x + x * delta, updateRotation.y + y * delta, updateRotation.z + z * delta)
             }
             else if(updateInfo.code === Human.ScaleCode) {
-                updateScale.addVectors(updatePosistion, new Vector3(x * delta, y * delta, z * delta))
+                updateScale.add(new Vector3(x * delta, y * delta, z * delta))
             }
             if(updateInfo.current > updateInfo.duration) {
                 this.updateQueue.splice(idx, 1)
             }
         })
-        const moveDelta = (Math.abs(updatePosistion.x) + Math.abs(updatePosistion.y) + Math.abs(updatePosistion.z)) / interval * 1000
+        const moveDelta = (Math.abs(updatePosistion.x) + Math.abs(updatePosistion.z)) / interval * 1000
         if(moveDelta == 0) {
             this.animation?.animate("Idle")
         }

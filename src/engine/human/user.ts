@@ -7,7 +7,10 @@ import Human from "./human";
 import Animation from './animation'
 
 export default class User extends Human {
+    public static firstPerson = 1
+    public static thirdPerson = 3
     public camera: Camera;
+    private mode: number = User.thirdPerson
     private raycaster: Raycaster
     private world: Model
     constructor (
@@ -26,7 +29,7 @@ export default class User extends Human {
         this.scene.add(model.scene)
         this.animation = new Animation(model.animations, model.scene)
         this.box = new Box3().setFromObject(model.scene)   
-        this.setPosition(new Vector3(-119, 0, 14))
+        this.setPosition(new Vector3(-119, -0.5, 14))
         this.setRotation(new Euler(0, 1.4, 0))
     }
     setPosition = (position: Vector3) => {
@@ -39,11 +42,11 @@ export default class User extends Human {
                     this.loadedModel.scene.position.set(x, y, z)
                 }
                 else {
-                    this.camera.position.set(position.x - 3, position.y + 3, position.z)
+                    this.setCameraPosistion(position)
                 }
             }
             else {
-                this.camera.position.set(position.x - 3, position.y + 3, position.z)
+                this.setCameraPosistion(position)
             }
         }
     }
@@ -51,11 +54,43 @@ export default class User extends Human {
         if(this.loadedModel != undefined) {
             this.loadedModel.scene.rotation.set(rotation.x, rotation.y, rotation.z, rotation.order)
             this.camera.rotation.set(0, rotation.y - Math.PI, 0, rotation.order)
-            // console.log(this.loadedModel.animations)
-            this.camera.lookAt(this.loadedModel.scene.position)
         }
     }
     setScale = (scale: Vector3) => {
         if (this.loadedModel != undefined) this.loadedModel.scene.scale.set(scale.x, scale.y, scale.z)
+    }
+    setMode(mode: number) {
+        this.mode = mode
+        this.setCameraPosistion(this.getPosistion()!)
+    }
+    toggleMode() {
+        if(this.mode === User.firstPerson) {
+            this.setMode(User.thirdPerson)
+        }
+        else {
+            this.setMode(User.firstPerson)
+        }
+    }
+    private setCameraPosistion(def: Vector3) {
+        let delta
+        if(this.mode === User.firstPerson) {
+            delta = new Vector3(def.x + 0, def.y + 1, def.z + 0)
+        }
+        else if(this.mode === User.thirdPerson) {
+            const dir = this.dirCalculator(-2)
+            delta = new Vector3(def.x + dir.x, def.y + dir.y, def.z + dir.z)
+        }
+        else {
+            delta = def
+        }
+        this.camera.position.set(delta!.x, delta!.y, delta!.z)
+    }
+    private dirCalculator(move: number): Vector3 {
+        const rotation:number = this.getRotation()!.y
+        let x = (Math.sin(rotation) * move)
+        let z = (Math.cos(rotation) * move)
+        if(x == Infinity || isNaN(x)) x = 0
+        if(z == Infinity || isNaN(z)) z = 0
+        return new Vector3(x, 2, z)
     }
 }
