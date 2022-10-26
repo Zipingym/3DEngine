@@ -22,6 +22,7 @@ export default class Core {
         this.engine = engine
         this.engine.createWorld("default")
         this.engine.createHuman(this.myName, undefined, true)
+        // this.engine.getHuman
 
         this.ui = ui
 
@@ -55,12 +56,13 @@ export default class Core {
     }
     private onNetworkInput(namespace: string, value: any) {
         if(namespace === "connect") {
-            console.log(this.myName)
             this.output(IO.Network, "login", {name: this.myName})
         }
         else if(namespace === "onconnect") {
             value.users.forEach((user: any) => {
+                // console.log(user)
                 this.engine.createHuman(user.name)
+                // console.log(user)
                 // this.engine.getHuman(user.name)!.setPosition(new Vector3(user.position.x, user.position.y, user.position.z))
                 // this.engine.getHuman(user.name)!.setRotation(new Euler(user.rotation.x, user.rotation.y, user.rotation.z))
                 // this.engine.getHuman(user.name)!.setScale(new Vector3(user.scale.x, user.scale.y, user.scale.z))
@@ -69,7 +71,12 @@ export default class Core {
         else if(namespace === "join") {
             this.engine.createHuman(value.name)
         }
+        else if(namespace === "out") {
+            // console.log(value.name)
+            // this.engine.
+        }
         else if(namespace === "control") {
+            console.log(value)
             const human = this.engine.getHuman(value.name)
             if(human != undefined) {
                 (value.functionCode === UserControl.UpdatePositionCode ? 

@@ -27,11 +27,14 @@ export default class Engine {
         this.collusion = new Collusion(this.threeDefault.getScene())
     }
     public createHuman(name: string, fileName?:string, camera?: boolean) {
-        fileName = fileName ?? this.models.humanModel
-        if(camera) 
-            this.humans.set(name, new User(this.models.humanModel,this.threeDefault.getScene(), this.threeDefault.getCamera(), this.getWorld("default")!))
-        else 
-            this.humans.set(name, new Human(this.models.humanModel,this.threeDefault.getScene()))
+        if(!this.humans.has(name)) {
+            fileName = fileName ?? this.models.humanModel
+            if(camera) 
+                this.humans.set(name, new User(this.models.humanModel,this.threeDefault.getScene(), this.threeDefault.getCamera(), this.getWorld("default")!))
+            else 
+                this.humans.set(name, new Human(this.models.humanModel,this.threeDefault.getScene(), this.getWorld("default")!))
+        }
+        console.log(this.humans)
     }
     public getHuman(name: string): Human | undefined {
         return this.humans.get(name)

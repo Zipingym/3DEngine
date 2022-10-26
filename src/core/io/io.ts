@@ -21,7 +21,7 @@ export default class IO implements inputAble, outputAble {
         this.recieve = recieve
         this.keyBoardModule = new KeyboardIo(IO.KeyBoard, recieve)
         this.webCamModule = new WebCamIo(IO.Webcam, recieve, webcamUi)
-        this.networkIo = new NetworkIo(IO.Network, recieve, "10.80.161.102:8400")
+        this.networkIo = new NetworkIo(IO.Network, recieve, "localhost:8400")
     }
 
     public recieve: (inputType: number, namespace: string, value: any) => void

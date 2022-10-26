@@ -3,11 +3,14 @@ import Model from "../model";
 import {
     Vector3,
     Euler,
-    Box3
+    Box3,
+    Raycaster,
+    Ray
 } from 'three'
 import { Scene } from "../three";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 import Animation from "./animation";
+import World from "../world/world";
 
 export default class Human extends Model implements moveAble {
     private static PositionCode: number = 0
@@ -18,22 +21,39 @@ export default class Human extends Model implements moveAble {
     public box?: Box3
     protected animation?: Animation
     private updateQueue: Array<UpdateInfo> = new Array()
+    protected raycaster: Raycaster
+    protected world: Model
     constructor(
         fileName: string,
-        scene:Scene
+        scene:Scene,
+        world: Model
     ) {
         super(fileName)
         this.scene = scene
+        this.world = world
+        this.raycaster = new Raycaster()
+        this.raycaster.far = 10
     }
     protected afterLoad(model: GLTF): void {
         this.scene.add(model.scene)
         this.animation = new Animation(model.animations, model.scene)
+        this.setPosition(new Vector3(-119, -0.5, 14))
+        this.setRotation(new Euler(0, 1.4, 0))
     }  
     getPosistion = () => this.loadedModel?.scene.position
     getRotation = () => this.loadedModel?.scene.rotation
     getScale = () => this.loadedModel?.scene.scale
     setPosition = (position: Vector3) => {
-        if(this.loadedModel != undefined) this.loadedModel.scene.position.set(position.x, position.y, position.z)
+        if(this.loadedModel != undefined) {
+            const { x, y, z } = this.loadedModel.scene.position
+            this.loadedModel.scene.position.set(position.x, position.y, position.z)
+            if(this.world.getIsLoading()) {
+                this.raycaster.ray = new Ray(position, new Vector3(0, -1, 0))
+                if(this.raycaster.intersectObjects(this.world.getLoadedModel()!.scene.children).map(element => element.object.name).filter((element) => element.includes("Plane048")).length == 0) {
+                    this.loadedModel.scene.position.set(x, y, z)
+                }
+            }
+        }
     }
     setRotation = (rotation: Euler) => {
         if(this.loadedModel != undefined) this.loadedModel.scene.rotation.set(rotation.x, rotation.y, rotation.z, rotation.order)

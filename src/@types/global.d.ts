@@ -10,3 +10,8 @@ declare module "*.gltf" {
     const content: string;
     export = content
 }
+
+declare module "file-loader?name=[name].js!*" {
+    const value: string;
+    export = value;
+}

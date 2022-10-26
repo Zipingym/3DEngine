@@ -10,7 +10,8 @@
         "noImplicitAny": true,
         "sourceMap": true,
         "esModuleInterop": true,
-        "typeRoots": ["src/@types", "node_modules/@types"]
+        "typeRoots": ["src/@types", "node_modules/@types"],
+        "lib": ["webworker", "es5", "dom"]
     },
     "include": ["**/*.ts"],
     "exclude": ["node_modules"]
