@@ -5,7 +5,7 @@ export default class Webcam {
         navigator.mediaDevices.enumerateDevices()
             .then((devices) => {
             devices.forEach((device) => {
-                console.log(device)
+                // console.log(device)
                 if(device.kind == "videoinput" && !device.label.includes("Virtual")) {
                     navigator.mediaDevices.getUserMedia({
                             video: { 

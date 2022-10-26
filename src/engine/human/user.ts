@@ -2,8 +2,9 @@ import { Box3, Euler, Ray, Raycaster, Scene, Vector3 } from "three";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 import Collusion from "../collusion/collusion";
 import Model from "../model";
-import ThreeDefault, { Camera } from "../three";
+import { Camera } from "../three";
 import Human from "./human";
+import Animation from './animation'
 
 export default class User extends Human {
     public camera: Camera;
@@ -22,7 +23,8 @@ export default class User extends Human {
         this.raycaster.far = 10
     }
     protected afterLoad(model: GLTF): void {
-        this.scene.add(model.scene)   
+        this.scene.add(model.scene)
+        this.animation = new Animation(model.animations, model.scene)
         this.box = new Box3().setFromObject(model.scene)   
         this.setPosition(new Vector3(-119, 0, 14))
         this.setRotation(new Euler(0, 1.4, 0))

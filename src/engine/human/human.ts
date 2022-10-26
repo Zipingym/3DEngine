@@ -7,14 +7,16 @@ import {
 } from 'three'
 import { Scene } from "../three";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
-import Collusion from "../collusion/collusion";
+import Animation from "./animation";
 
 export default class Human extends Model implements moveAble {
     private static PositionCode: number = 0
     private static RotationCode: number = 1
     private static ScaleCode: number = 2
+    
     protected scene: Scene
     public box?: Box3
+    protected animation?: Animation
     private updateQueue: Array<UpdateInfo> = new Array()
     constructor(
         fileName: string,
@@ -24,7 +26,8 @@ export default class Human extends Model implements moveAble {
         this.scene = scene
     }
     protected afterLoad(model: GLTF): void {
-        this.scene.add(model.scene) 
+        this.scene.add(model.scene)
+        this.animation = new Animation(model.animations, model.scene)
     }  
     getPosistion = () => this.loadedModel?.scene.position
     getRotation = () => this.loadedModel?.scene.rotation
@@ -99,23 +102,42 @@ export default class Human extends Model implements moveAble {
         }
     }
     update = (interval: number) => {
+        const updatePosistion = new Vector3(0, 0, 0)
+        const updateRotation = new Euler(0, 0, 0)
+        const updateScale = new Vector3(0, 0, 0)
         this.updateQueue.forEach((updateInfo: UpdateInfo, idx: number) => {
             updateInfo.current += interval
             const delta = (updateInfo.current > updateInfo.duration ? interval - (updateInfo.current - updateInfo.duration) : interval) / updateInfo.duration
             const { x, y, z } = updateInfo.everyMillsecond
             if(updateInfo.code === Human.PositionCode) {
-                this._updatePosition(new Vector3(x * delta, y * delta, z * delta))
+                updatePosistion.addVectors(updatePosistion, new Vector3(x * delta, y * delta, z * delta))
             }
             else if(updateInfo.code === Human.RotationCode) {
-                this._updateRotation(new Euler(x * delta, y * delta, z * delta))
+                updateRotation.set(updateRotation.x + x * delta, updateRotation.y + y * delta, updateRotation.z + z * delta)
             }
             else if(updateInfo.code === Human.ScaleCode) {
-                this._updateScale(new Vector3(x * delta, y * delta, z * delta))
+                updateScale.addVectors(updatePosistion, new Vector3(x * delta, y * delta, z * delta))
             }
             if(updateInfo.current > updateInfo.duration) {
                 this.updateQueue.splice(idx, 1)
             }
         })
+        const moveDelta = (Math.abs(updatePosistion.x) + Math.abs(updatePosistion.y) + Math.abs(updatePosistion.z)) / interval * 1000
+        if(moveDelta == 0) {
+            this.animation?.animate("Idle")
+        }
+        else if(moveDelta < 6) {
+            this.animation?.animate("Walking")
+        }
+        else if(moveDelta >= 6) {
+            this.animation?.animate("Running")
+        }
+        if(this.loadedModel != undefined) {
+            this._updatePosition(updatePosistion)
+            this._updateRotation(updateRotation)
+            this._updateScale(updateScale)
+        }
+        if(this.animation != undefined) this.animation.update(interval)
     }
 }
 

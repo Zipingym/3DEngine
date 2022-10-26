@@ -1,7 +1,7 @@
 import App from './index'
 import './dev.style.scss'
 import worldModel from '../static/model/beach.glb'
-import manModel from "../static/model/man.gltf"
+import manModel from "../static/model/girl.glb"
 
 const app = new App(document.getElementById('app')!, "park", {
     worldModel: worldModel,
