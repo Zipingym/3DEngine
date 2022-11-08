@@ -34,7 +34,7 @@ export default class WebCamIo implements inputAble {
         this.inputType = inputType
         this.graphic = new Graphic(webcamUi.getContainerElement())
         this.pose = new Pose({locateFile: (file) => {
-            return `http://localhost:3000/mediapipe/${file}`;
+            return `./mediapipe/${file}`;
         }})
         this.pose.setOptions({
             modelComplexity: 0,

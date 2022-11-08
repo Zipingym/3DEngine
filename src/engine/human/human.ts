@@ -19,6 +19,8 @@ export default class Human extends Model implements moveAble {
     
     protected scene: Scene
     public box?: Box3
+    public race: number = -1
+    public inRace: boolean = false
     protected animation?: Animation
     private updateQueue: Array<UpdateInfo> = new Array()
     protected raycaster: Raycaster
@@ -121,10 +123,15 @@ export default class Human extends Model implements moveAble {
             })
         }
     }
+
     update = (interval: number) => {
         const updatePosistion = new Vector3(0, 0, 0)
         const updateRotation = new Euler(0, 0, 0)
         const updateScale = new Vector3(0, 0, 0)
+        if(this.inRace) {
+            this.race += interval
+            console.log(this.race)
+        }
         this.updateQueue.forEach((updateInfo: UpdateInfo, idx: number) => {
             updateInfo.current += interval
             const delta = (updateInfo.current > updateInfo.duration ? interval - (updateInfo.current - updateInfo.duration) : interval) / updateInfo.duration

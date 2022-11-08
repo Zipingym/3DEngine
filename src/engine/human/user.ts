@@ -33,7 +33,15 @@ export default class User extends Human {
             this.loadedModel.scene.position.set(position.x, position.y, position.z)
             if(this.world.getIsLoading()) {
                 this.raycaster.ray = new Ray(position, new Vector3(0, -1, 0))
-                if(this.raycaster.intersectObjects(this.world.getLoadedModel()!.scene.children).map(element => element.object.name).filter((element) => element.includes("Plane048")).length == 0) {
+                const objects = this.raycaster.intersectObjects(this.world.getLoadedModel()!.scene.children).map(element => element.object.name)
+                if(objects.filter((element) => element.includes("Plane068")).length === 1) {
+                    this.inRace = true
+                }
+                else if(objects.filter((element) => element.includes("Plane067")).length === 1) {
+                    this.inRace = false
+                }
+                
+                if(objects.filter((element) => element.includes("Plane048")).length == 0) {
                     this.loadedModel.scene.position.set(x, y, z)
                 }
                 else {
@@ -56,7 +64,7 @@ export default class User extends Human {
     }
     setMode(mode: number) {
         this.mode = mode
-        this.setCameraPosistion(this.getPosistion()!)
+        // this.setCameraPosistion(this.getPosistion()!)
     }
     toggleMode() {
         if(this.mode === User.firstPerson) {

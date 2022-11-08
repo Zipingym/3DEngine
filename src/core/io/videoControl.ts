@@ -21,7 +21,7 @@ export default class Video {
         this.element.autoplay = true
         this.element.muted = true
         this.element.playsInline = true
-        this.element.controls = true
+        // this.element.controls = true
         this.update()
     }
     update() {
