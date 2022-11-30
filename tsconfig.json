@@ -11,7 +11,15 @@
         "sourceMap": true,
         "esModuleInterop": true,
         "typeRoots": ["src/@types", "node_modules/@types"],
-        "lib": ["webworker", "es5", "dom"]
+        "lib": ["webworker", "es5", "dom"],
+        "baseUrl": ".", // setting a value for baseUrl is required
+        "paths": {
+            "@interface/*": ["./src/package/interface/*"],
+            "@class/*": ["./src/package/class/*"],
+            "@package/*": ["./src/package/package/*"],
+            "@/*": ["./src//*"],
+            "@static/*": ["./static/*"],
+        },
     },
     "include": ["**/*.ts"],
     "exclude": ["node_modules"]

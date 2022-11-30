@@ -1,5 +1,5 @@
 import App from './index'
-import './dev.style.scss'
+// import './dev.style.scss'
 import worldModel from '../static/model/beach2.glb'
 import manModel from "../static/model/girl.glb"
 
@@ -7,14 +7,3 @@ const app = new App(document.getElementById('app')!, "park", {
     worldModel: worldModel,
     humanModel: manModel
 })
-// document.getElementById('tempbutton')?.addEventListener("click", () => {
-//     //@ts-ignore
-//     const app = new App(document.getElementById('app')!, document.getElementById("tempinput").value, {
-//         worldModel: worldModel,
-//         humanModel: manModel
-//     })
-//     let temp = document.getElementById('tempbutton')!
-//     temp.style.display = "none"
-//     temp = document.getElementById("tempinput")!
-//     temp.style.display = "none"
-// })
