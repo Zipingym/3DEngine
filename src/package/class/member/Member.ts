@@ -2,12 +2,15 @@ import TraversalAbleImpl from "./TraversalAbleImpl";
 import HaveAttributeAble from "@interface/HaveAttributeAble";
 import EventListenAble from "@interface/EventListenAble";
 import EventInterface from "@interface/EventInterface";
-abstract class MemberClass extends TraversalAbleImpl<MemberClass> implements HaveAttributeAble {
+abstract class Member extends TraversalAbleImpl<Member> implements HaveAttributeAble {
     constructor(
-
+        id?: number
     ) {
         super()
+        this.id = id ?? this.findRoot().id
     }
+    public id: number;
+    public class: string = "";
     private attribute: Map<string, object> = new Map()
     private eventListeners: Array<EventListenAble> = new Array()
 
@@ -25,8 +28,7 @@ abstract class MemberClass extends TraversalAbleImpl<MemberClass> implements Hav
         }
         else return false
     }
-
-    public appendChild(member: MemberClass): void {
+    public appendChild(member: Member): void {
         this.children.push(member)
         member.setParent(this)
     }
@@ -42,4 +44,4 @@ abstract class MemberClass extends TraversalAbleImpl<MemberClass> implements Hav
         })
     }
 }
-export default MemberClass
+export default Member

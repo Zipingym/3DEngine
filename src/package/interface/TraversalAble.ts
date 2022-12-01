@@ -1,5 +1,7 @@
 interface TraversalAble<T> {
     appendChild:(member: T) => void
+
+    findRoot: () => T
     findParent: () => T | undefined
 
     findAllSiblings: () => Array<T>

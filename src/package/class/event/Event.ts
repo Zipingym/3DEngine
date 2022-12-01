@@ -1,12 +1,14 @@
-import MemberClass from "@class/member/Member";
+import Member from "@class/member/Member";
 import EventInterface from "@interface/EventInterface";
 
 export default class Event<T> implements EventInterface<T> {
-    public eventTarget: MemberClass;
+    public static UPDATE = 0
+
+    public eventTarget: Member;
     public value: T;
     public eventCode: number;
     constructor (
-        target: MemberClass,
+        target: Member,
         code: number,
         value: T,
     ) {

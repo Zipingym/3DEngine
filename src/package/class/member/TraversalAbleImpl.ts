@@ -8,6 +8,15 @@ export default abstract class TraversalAbleImpl<T extends TraversalAbleImpl<T>> 
     ) {
         
     }
+    //@ts-ignore
+    public findRoot() {
+        if(this.parent === undefined) {
+            return this
+        }
+        else {
+            return this.parent.findRoot()
+        }
+    }
     public findAllSiblings() {
         if(this.parent === undefined) {
             return new Array()

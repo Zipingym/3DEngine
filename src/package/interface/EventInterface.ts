@@ -1,7 +1,7 @@
-import MemberClass from "@class/member/Member"
+import Member from "@class/member/Member"
 
 interface EventInterface<T> {
-    eventTarget: MemberClass,
+    eventTarget: Member,
     value: T
     eventCode: number
     occur: () => void
