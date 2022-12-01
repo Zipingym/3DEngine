@@ -19,6 +19,7 @@
             "@package/*": ["./src/package/package/*"],
             "@/*": ["./src//*"],
             "@static/*": ["./static/*"],
+            "@util/*": ["./src/util/*"],
         },
     },
     "include": ["**/*.ts"],

@@ -13,7 +13,8 @@
                     "@package": "./src/package",
                     "@interface": "./src/package/interface",
                     "@class": "./src/package/class",
-                    "@static": "./static"
+                    "@static": "./static",
+                    "@util": "./src/util"
                 }
             }
         ]
