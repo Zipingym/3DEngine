@@ -7,8 +7,10 @@ export default class App extends Member {
     ) {
         super(0)
         this.setAttribute(App.rootELement, config.rootELement)
+        this.appendChild(new module.ThreeMember())
         this.appendChild(new module.UpdateMember())
     }
+    protected onPatchTree = () => {}
 }
 
 export interface Config {

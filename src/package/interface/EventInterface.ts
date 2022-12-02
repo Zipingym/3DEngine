@@ -1,7 +1,7 @@
 import Member from "@class/member/Member"
 
 interface EventInterface<T> {
-    eventTarget: Member,
+    eventCaller: Member,
     value: T
     eventCode: number
     occur: () => void

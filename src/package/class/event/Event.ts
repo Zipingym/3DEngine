@@ -4,7 +4,7 @@ import EventInterface from "@interface/EventInterface";
 export default class Event<T> implements EventInterface<T> {
     public static UPDATE = 0
 
-    public eventTarget: Member;
+    public eventCaller: Member;
     public value: T;
     public eventCode: number;
     constructor (
@@ -12,11 +12,11 @@ export default class Event<T> implements EventInterface<T> {
         code: number,
         value: T,
     ) {
-        this.eventTarget = target
+        this.eventCaller = target
         this.eventCode = code
         this.value = value
     }
     occur () {
-        this.eventTarget.occur(this)
+        this.eventCaller.occur(this)
     }
 }

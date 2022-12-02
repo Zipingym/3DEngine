@@ -1,3 +1,4 @@
+import Member from "@class/member/Member";
 import EventInterface from "@interface/EventInterface";
 import EventListenAble from "@interface/EventListenAble";
 
@@ -14,5 +15,5 @@ export default abstract class EventListener implements EventListenAble {
     public isEqualCode (eventCode: number) {
         return EventListener.isEqualCode(this.eventCode, eventCode)
     }
-    public abstract onEventOccur: (event: EventInterface<any>) => void;
+    public abstract onEventOccur: (event: EventInterface<any>, target: Member) => void;
 }
