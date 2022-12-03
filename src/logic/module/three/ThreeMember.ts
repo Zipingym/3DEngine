@@ -1,7 +1,7 @@
 import Member from "@class/member/Member";
 import { Color, Light, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer } from "three";
 import App from "../../app";
-import UpdateEventListener from "./UpdateEventListener";
+import UpdateEventListener from "./CameraUpdateEventListener";
 import Event from "@class/event/Event";
 import LightMember from "./LightMember";
 import CameraMember from "./CameraMember";
@@ -9,6 +9,8 @@ import Visible from "@/logic/visible/visible";
 import OrbitControlMember from "./OrbitControlMember";
 import World from "@/logic/visible/World";
 import User from "@/logic/visible/User";
+import WorldMember from "./WorldMember";
+import HumanMember from "./HumanMember";
 export default class ThreeMember extends Member {
     public static ID = 9
     public static RENDERER = "renderer"
@@ -30,13 +32,12 @@ export default class ThreeMember extends Member {
         domElement.appendChild(renderer.domElement)
         this.setAttribute(ThreeMember.RENDERER, renderer)
 
-        this.appendEventListener(new UpdateEventListener(Event.UPDATE))
-
         this.appendChild(new LightMember())
         this.appendChild(new CameraMember())
         this.appendChild(new OrbitControlMember())
-
-        this.appendChild(new World(this.findRoot().getAttribute(App.worldModel)))
+        this.appendChild(new WorldMember())
+        // this.appendChild(new HumanMember())
+        
         this.appendChild(new User(this.findRoot().getAttribute(App.characterModel)))
     }
 

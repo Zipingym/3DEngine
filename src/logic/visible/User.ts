@@ -1,16 +1,19 @@
 import LoadAbleAsset from "@class/asset/LoadableAsset";
+import Event from "@class/event/Event";
 import { PerspectiveCamera, Vector3 } from "three";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 import app from "../app";
 import CameraMember from "../module/three/CameraMember";
 import Human from "./Human";
+import UserKeyboardInputEventListener from "./UserKeyboardInputEventListener";
 
 export default class User extends Human {
     private camera: PerspectiveCamera
     constructor (
-        asset: LoadAbleAsset<GLTF>
+        asset: LoadAbleAsset<GLTF>,
+        className?: string
     ) {
-        super(asset)
+        super(asset, className)
         this.camera = new PerspectiveCamera()
     }
     protected beforeRender(gltf: GLTF): void {
@@ -21,6 +24,8 @@ export default class User extends Human {
         this.setCameraPosistion(new Vector3(-55, -0.5, 66))
         this.findRoot().findOneDescendente((e) => e.id === CameraMember.ID)?.setAttribute(CameraMember.CAMERA, this.camera)
         gltf.scene.position.set(-55, -0.5, 66)
+
+        this.appendEventListener(new UserKeyboardInputEventListener(Event.KEYBOARD))
     }
 
     private setCameraPosistion(def: Vector3) {

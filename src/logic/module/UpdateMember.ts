@@ -11,7 +11,6 @@ export default class UpdateMember extends Member {
         super(UpdateMember.ID)
         this.performance = new Performance()
         this.updateEvent = new Event(this.findRoot(), Event.UPDATE, 0);
-        
     }
     protected onPatchTree = () => {
         this.updateEvent.eventCaller = this.findRoot()
