@@ -5,6 +5,10 @@ import UpdateEventListener from "./UpdateEventListener";
 import Event from "@class/event/Event";
 import LightMember from "./LightMember";
 import CameraMember from "./CameraMember";
+import Visible from "@/logic/visible/visible";
+import OrbitControlMember from "./OrbitControlMember";
+import World from "@/logic/visible/World";
+import User from "@/logic/visible/User";
 export default class ThreeMember extends Member {
     public static ID = 9
     public static RENDERER = "renderer"
@@ -22,7 +26,7 @@ export default class ThreeMember extends Member {
         const scene = this.sceneSetter()
         this.setAttribute(ThreeMember.SCENE, scene)
 
-        const renderer = this.rendererSetter()
+        const renderer = this.rendererSetter(domElement)
         domElement.appendChild(renderer.domElement)
         this.setAttribute(ThreeMember.RENDERER, renderer)
 
@@ -30,6 +34,10 @@ export default class ThreeMember extends Member {
 
         this.appendChild(new LightMember())
         this.appendChild(new CameraMember())
+        this.appendChild(new OrbitControlMember())
+
+        this.appendChild(new World(this.findRoot().getAttribute(App.worldModel)))
+        this.appendChild(new User(this.findRoot().getAttribute(App.characterModel)))
     }
 
     private sceneSetter() {
@@ -38,11 +46,12 @@ export default class ThreeMember extends Member {
         return scene
     }
 
-    private rendererSetter() {
+    private rendererSetter(html: HTMLElement) {
         const renderer = new WebGLRenderer({
 			antialias: true,
 		})
-        renderer.setSize(renderer.domElement.width, renderer.domElement.height)
+        renderer.setClearColor(0xff0000, 1.0)
+        renderer.setSize(html.clientWidth * 2, html.clientHeight * 2)
 		renderer.outputEncoding = sRGBEncoding
 		renderer.domElement.style.width = "100%";
 		renderer.domElement.style.height = "100%";

@@ -14,10 +14,6 @@ export default class CameraMember extends Member {
     }
 
     protected onPatchTree = () => {
-        const renderer = this.findParent()?.getAttribute(ThreeMember.RENDERER)
-        const camera = new PerspectiveCamera(100, renderer.domElement.width / renderer.domElement.height)
-        camera.near = 0.01
-        camera.far = 500
-        this.setAttribute(CameraMember.CAMERA, camera)
+        
     }
 }

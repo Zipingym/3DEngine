@@ -21,4 +21,7 @@ export default abstract class LoadAbleAsset<T> implements LoadAble<T> {
         this.onloadQueue.push(lambda)
         this.executeLoadQueue()
     }
+    public getAsset() {
+        return this.asset
+    }
 }

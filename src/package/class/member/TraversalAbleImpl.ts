@@ -8,18 +8,18 @@ export default abstract class TraversalAbleImpl<T extends TraversalAbleImpl<T>> 
     ) {
         
     }
-    findOneSiblings = (lambda: (tree: T) => boolean) => {
+    findOneSibling = (lambda: (tree: T) => boolean) => {
         return this.findAllSiblings().find(lambda)
     }
-    findOneChildren = (lambda: (tree: T) => boolean) => {
+    findOneChild = (lambda: (tree: T) => boolean) => {
         return this.findAllChildren().find(lambda)
     }
-    findOneDescendentes = (lambda: (tree: T) => boolean) => {
+    findOneDescendente = (lambda: (tree: T) => boolean) => {
         return this.findAllAllDescendentes().find(lambda)
     }
-    //@ts-ignore
-    public findRoot() {
+    public findRoot(): T {
         if(this.parent === undefined) {
+            //@ts-ignore
             return this
         }
         else {

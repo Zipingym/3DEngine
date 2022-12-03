@@ -8,9 +8,9 @@ interface TraversalAble<T> {
     findAllChildren:() => Array<T>
     findAllAllDescendentes: () => Array<T>
 
-    findOneSiblings: (lambda: (tree: T) => boolean) => T | undefined
-    findOneChildren: (lambda: (tree: T) => boolean) => T | undefined
-    findOneDescendentes: (lambda: (tree: T) => boolean) => T | undefined
+    findOneSibling: (lambda: (tree: T) => boolean) => T | undefined
+    findOneChild: (lambda: (tree: T) => boolean) => T | undefined
+    findOneDescendente: (lambda: (tree: T) => boolean) => T | undefined
 
     findSiblings: (lambda: (tree: T) => boolean) => Array<T>
     findChildren: (lambda: (tree: T) => boolean) => Array<T>

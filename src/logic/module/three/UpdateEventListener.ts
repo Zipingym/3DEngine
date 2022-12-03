@@ -9,7 +9,7 @@ export default class UpdateEventListener extends EventListener {
         target.executeWithAttribute(ThreeMember.RENDERER, (renderer) => {
             renderer.render(
                 target.getAttribute(ThreeMember.SCENE), 
-                target.findOneChildren((arg) => arg.id === CameraMember.ID)!.getAttribute(CameraMember.CAMERA)
+                target.findOneChild((arg) => arg.id === CameraMember.ID)?.getAttribute(CameraMember.CAMERA)
             )
         })
     }

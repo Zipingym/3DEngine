@@ -19,7 +19,7 @@ export default class GltfAsset extends LoadAbleAsset<GLTF> {
         this.executeLoadQueue()
     }
     protected onProgress(event: ProgressEvent): void {
-        throw new Error("Method not implemented.");
+        
     }
     protected onError(event: ErrorEvent): void {
         throw new Error("Method not implemented.");
