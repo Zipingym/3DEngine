@@ -6,6 +6,7 @@ import app from "../app";
 import CameraMember from "../module/three/CameraMember";
 import Human from "./Human";
 import UserKeyboardInputEventListener from "./UserKeyboardInputEventListener";
+import Visible from "./visible";
 
 export default class User extends Human {
     private camera: PerspectiveCamera
@@ -22,10 +23,22 @@ export default class User extends Human {
         this.camera.near = 0.01
         this.camera.far = 500
         this.setCameraPosistion(new Vector3(-55, -0.5, 66))
+
         this.findRoot().findOneDescendente((e) => e.id === CameraMember.ID)?.setAttribute(CameraMember.CAMERA, this.camera)
+        this.setAttribute(CameraMember.CAMERA, this.camera)
+
         gltf.scene.position.set(-55, -0.5, 66)
 
         this.appendEventListener(new UserKeyboardInputEventListener(Event.KEYBOARD))
+    }
+
+    public setPosition(position: Vector3, time: number = 0) {
+        this.executeWithAttribute(Visible.ASSET, (asset: GLTF) => {
+            if(time === 0) {
+                asset.scene.position.set(position.x, position.y, position.z)
+                this.setCameraPosistion(position)
+            }
+        })
     }
 
     private setCameraPosistion(def: Vector3) {
@@ -34,5 +47,4 @@ export default class User extends Human {
         this.camera.position.set(delta!.x, delta!.y, delta!.z)
         this.camera.lookAt(new Vector3(def.x, def.y + 1, def.z))
     }
-    
 }
