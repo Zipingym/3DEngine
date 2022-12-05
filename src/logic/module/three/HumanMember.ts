@@ -6,5 +6,4 @@ export default class HumanMember extends Member {
     protected onPatchTree = () => {
         this.appendChild(new User(this.findRoot().getAttribute(App.worldModel)))
     }
-
 }

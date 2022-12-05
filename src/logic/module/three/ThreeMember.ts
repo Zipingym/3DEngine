@@ -43,7 +43,7 @@ export default class ThreeMember extends Member {
 
     private sceneSetter() {
         const scene = new Scene()
-        scene.background = new Color(0xf0f0f0)
+        scene.background = new Color(0xabe7f5)
         return scene
     }
 

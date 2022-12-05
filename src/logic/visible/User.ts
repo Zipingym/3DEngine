@@ -6,10 +6,12 @@ import app from "../app";
 import CameraMember from "../module/three/CameraMember";
 import Human from "./Human";
 import UserKeyboardInputEventListener from "./UserKeyboardInputEventListener";
+import UserUpdateEventListener from "./UserUpdateEventListener";
 import Visible from "./visible";
 
 export default class User extends Human {
     private camera: PerspectiveCamera
+    public static SET_CAMERA_POS = "setCameraPosition"
     constructor (
         asset: LoadAbleAsset<GLTF>,
         className?: string
@@ -29,17 +31,20 @@ export default class User extends Human {
 
         gltf.scene.position.set(-55, -0.5, 66)
 
+        this.setAttribute(User.SET_CAMERA_POS, this.setCameraPosistion.bind(this))
+
+        this.appendEventListener(new UserUpdateEventListener(Event.UPDATE))
         this.appendEventListener(new UserKeyboardInputEventListener(Event.KEYBOARD))
     }
 
-    public setPosition(position: Vector3, time: number = 0) {
-        this.executeWithAttribute(Visible.ASSET, (asset: GLTF) => {
-            if(time === 0) {
-                asset.scene.position.set(position.x, position.y, position.z)
-                this.setCameraPosistion(position)
-            }
-        })
-    }
+    // public setPosition(position: Vector3, time: number = 0) {
+    //     this.executeWithAttribute(Visible.ASSET, (asset: GLTF) => {
+    //         if(time === 0) {
+    //             asset.scene.position.set(position.x, position.y, position.z)
+    //             this.setCameraPosistion(position)
+    //         }
+    //     })
+    // }
 
     private setCameraPosistion(def: Vector3) {
         const dir = this.dirCalculator(-2)

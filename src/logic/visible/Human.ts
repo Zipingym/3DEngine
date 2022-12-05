@@ -1,9 +1,12 @@
 import LoadAbleAsset from "@class/asset/LoadableAsset";
 import Event from "@class/event/Event";
-import { Euler, Vector3 } from "three";
+import { Euler, Ray, Raycaster, Vector3 } from "three";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
+import BeachWorld from "./BeachWorld";
+import HumanAnimation from "./HumanAnimation";
 import HumanUpdateEventListener from "./HumanUpdateEventListener";
 import Visible from "./visible";
+import World from "./World";
 
 export default class Human extends Visible {
     public static POSITION = "position"
@@ -22,14 +25,19 @@ export default class Human extends Visible {
     public static POS_WAIT_QUEUE = "positionWaitQueue"
     public static ROT_WAIT_QUEUE = "rotationWaitQueue"
 
+    public static ANIMATION = "animation"
+
     private positionWaitQueue:Array<ChangeWait<Vector3>> = new Array()
     private rotationWaitQueue:Array<ChangeWait<Euler>> = new Array()
+     protected raycaster: Raycaster
     constructor (
         asset: LoadAbleAsset<GLTF>,
         className?: string
     ) {
         super(asset)
         this.class = className ?? ""
+        this.raycaster = new Raycaster()
+
         this.setAttribute(Human.SET_POSITION, this.setPosition.bind(this))
         this.setAttribute(Human.ADD_POSITION, this.addPosition.bind(this))
         this.setAttribute(Human.GET_POSITION, this.getPosition.bind(this))
@@ -59,10 +67,15 @@ export default class Human extends Visible {
             return new Vector3(0, 0, 0)
         }
     }
-
+    protected afterRender(gltf: GLTF): void {
+        this.setAttribute(Human.ANIMATION, new HumanAnimation(gltf.animations, gltf.scene))
+    }
     public setPosition(position: Vector3) {
         this.executeWithAttribute(Visible.ASSET, (asset: GLTF) => {
-            asset.scene.position.set(position.x, position.y, position.z)
+            const world = this.findRoot().findOneDescendente((e) => e.class === BeachWorld.CLASS_NAME)
+            this.raycaster.ray = new Ray(position, new Vector3(0, -1, 0))
+            if(this.raycaster.intersectObject(world?.getAttribute(BeachWorld.ROAD)).length > 0)
+                asset.scene.position.set(position.x, position.y, position.z)
         })
     }
     public addPosition(position: Vector3, time: number = 0) {
