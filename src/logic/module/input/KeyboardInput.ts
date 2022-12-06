@@ -1,7 +1,7 @@
 import Event from "@class/event/Event";
 import Member from "@class/member/Member";
 
-export default class InputMember extends Member {
+export default class KeyboardInput extends Member {
     private keyboardEvent: Event<KeyboardEvent>
     constructor (
 

@@ -10,40 +10,65 @@ import Visible from "./visible";
 export default class HumanUpdateEventListener extends EventListener {
     public onEventOccur = (event: EventInterface<number>, target: Member) => {
         target.executeWithAttribute(Visible.ASSET, (asset:GLTF) => {
+            let moveFinal: Vector3
+            let rotationFinal: Euler
             target.executeWithAttribute(Human.POS_WAIT_QUEUE, (arr: Array<ChangeWait<Vector3>>) => {
-                const final = new Vector3()
-                arr.forEach((e: ChangeWait<Vector3>) => {
-                    const {x,y,z} = e.getAsTime(event.value)
-                    final.x += x
-                    final.y += y
-                    final.z += z
-                })
-                target.getAttribute(Human.ADD_POSITION)(final)
-                
-                target.executeWithAttribute(Human.ANIMATION, (anime: HumanAnimation) => {
-                    const dis = Math.abs(final.x) + Math.abs(final.y) + Math.abs(final.z)
-                    if(dis === 0) {
-                        target.getAttribute(Human.ANIMATION).animate("Idle")
-                    }
-                    else if(dis / event.value > 0.015) {
-                        target.getAttribute(Human.ANIMATION).animate("Running")
-                    }
-                    else {
-                        target.getAttribute(Human.ANIMATION).animate("Walking")
-                    }
+                moveFinal = this.positionUpdate(arr, event.value)
+                target.getAttribute(Human.ADD_POSITION)(moveFinal)
+            target.executeWithAttribute(Human.ROT_WAIT_QUEUE, (arr: Array<ChangeWait<Euler>>) => {
+                rotationFinal = this.rotationUpdate(arr, event.value)
+                target.getAttribute(Human.ADD_ROTATION)(rotationFinal)
+            })
+            target.executeWithAttribute(Human.ANIMATION, (anime: HumanAnimation) => {
+                    const animationName = this.animationUpdate(moveFinal, rotationFinal)
+                    target.getAttribute(Human.ANIMATION).animate(animationName)
                     anime.update(event.value)
                 })
             })
-            target.executeWithAttribute(Human.ROT_WAIT_QUEUE, (arr: Array<ChangeWait<Euler>>) => {
-                const final = new Euler()
-                arr.forEach((e: ChangeWait<Euler>) => {
-                    const {x,y,z} = e.getAsTime(event.value)
-                    final.x += x
-                    final.y += y
-                    final.z += z
-                })
-                target.getAttribute(Human.ADD_ROTATION)(final)
-            })
         })
+    }
+
+    private positionUpdate(
+        queue: Array<ChangeWait<Vector3>>,
+        time: number
+    ): Vector3 {
+        const final = new Vector3()
+        queue.forEach((e: ChangeWait<Vector3>) => {
+            const {x,y,z} = e.getAsTime(time)
+            final.x += x
+            final.y += y
+            final.z += z
+        })
+        return final
+    }
+
+    private rotationUpdate (
+        queue: Array<ChangeWait<Euler>>,
+        time: number
+    ): Euler {
+        const final = new Euler()
+        queue.forEach((e: ChangeWait<Euler>) => {
+            const {x,y,z} = e.getAsTime(time)
+            final.x += x
+            final.y += y
+            final.z += z
+        })
+        return final
+    }
+
+    private animationUpdate(
+        movePos: Vector3,
+        moveRot: Euler
+    ): string {
+        if(movePos.y > 0) {
+            return "Jumping"
+        }
+        if(movePos.y < 0) {
+            return "Sliding"
+        }
+        else if(Math.abs(movePos.x) + Math.abs(movePos.z) > 0) {
+            return "Running"
+        }
+        else { return "Idle"}
     }
 }

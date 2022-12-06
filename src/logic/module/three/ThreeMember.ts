@@ -23,7 +23,7 @@ export default class ThreeMember extends Member {
     }
 
     protected onPatchTree = () => {
-        const domElement = this.findRoot().getAttribute(App.rootELement)
+        const domElement = this.findRoot().getAttribute(App.rootElement)
 
         const scene = this.sceneSetter()
         this.setAttribute(ThreeMember.SCENE, scene)

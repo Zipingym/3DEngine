@@ -13,6 +13,7 @@ export default class UserKeyboardInputEventListener extends EventListener {
                 if(key === "w") posAdder(dirCalculator(3), 300)
                 else if(key === "a") rotAdder(new Euler(0, 0.5, 0), 100)
                 else if(key === "d") rotAdder(new Euler(0, -0.5, 0), 100)
+                else if(key === " ") posAdder(new Vector3(0, 0.01, 0), 1500)
             })
         })
     }

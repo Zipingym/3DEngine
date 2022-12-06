@@ -7,6 +7,7 @@ import CameraMember from "../module/three/CameraMember";
 import Human from "./Human";
 import UserKeyboardInputEventListener from "./UserKeyboardInputEventListener";
 import UserUpdateEventListener from "./UserUpdateEventListener";
+import UserExerciseInputEventListener from "./UserExerciseInputEventListener";
 import Visible from "./visible";
 
 export default class User extends Human {
@@ -20,7 +21,7 @@ export default class User extends Human {
         this.camera = new PerspectiveCamera()
     }
     protected beforeRender(gltf: GLTF): void {
-        const root = this.findRoot().getAttribute(app.rootELement)
+        const root = this.findRoot().getAttribute(app.rootElement)
         this.camera = new PerspectiveCamera(100, root.clientWidth / root.clientHeight, 1, 1000)
         this.camera.near = 0.01
         this.camera.far = 500
@@ -35,6 +36,7 @@ export default class User extends Human {
 
         this.appendEventListener(new UserUpdateEventListener(Event.UPDATE))
         this.appendEventListener(new UserKeyboardInputEventListener(Event.KEYBOARD))
+        this.appendEventListener(new UserExerciseInputEventListener(Event.EXERCISE))
     }
 
     // public setPosition(position: Vector3, time: number = 0) {

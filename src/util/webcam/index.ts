@@ -6,7 +6,7 @@ export default class Webcam {
             .then((devices) => {
             devices.forEach((device) => {
                 console.log(device)
-                if(device.kind == "videoinput" && !device.label.includes("Virtual") && device.label.includes("C930c")) {
+                if(device.kind == "videoinput" && !device.label.includes("Virtual")) {
                     navigator.mediaDevices.getUserMedia({
                             video: { 
                                 width: { ideal: 1920 }, 
