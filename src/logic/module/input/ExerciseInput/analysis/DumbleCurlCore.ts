@@ -10,7 +10,7 @@ export default class DumbbellCurlAnalysis {
         if(degree < 100 &&
         !this.flag){
             this.flag = true
-        } else if (this.flag && degree >= 120){
+        } else if (this.flag && degree >= 110){
             this.flag = false
             return true
         }
