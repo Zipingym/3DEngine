@@ -72,6 +72,7 @@ export default class WebCamIo implements inputAble {
             })
         });
     }
+    
     public static ThreeDegree(a: Vector3, b: Vector3, c: Vector3) {
         const ab = [b.x - a.x, b.y - a.y, b.z - a.z]
         const bc = [c.x - b.x, c.y - b.y, c.z - b.z]

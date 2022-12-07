@@ -25,7 +25,8 @@ export default class KeyboardController extends Controller {
             this.user.toggleMode()
         }
         else {
-            // console.log(value)
+
+            console.log(this.human.getPosistion())
         }
         return undefined
     }

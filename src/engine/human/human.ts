@@ -39,7 +39,7 @@ export default class Human extends Model implements moveAble {
     protected afterLoad(model: GLTF): void {
         this.scene.add(model.scene)
         this.animation = new Animation(model.animations, model.scene)
-        this.setPosition(new Vector3(-119, -0.5, 14))
+        this.setPosition(new Vector3(-55, -0.5, 66))
         this.setRotation(new Euler(0, 1.4, 0))
     }  
     getPosistion = () => this.loadedModel?.scene.position
@@ -130,7 +130,6 @@ export default class Human extends Model implements moveAble {
         const updateScale = new Vector3(0, 0, 0)
         if(this.inRace) {
             this.race += interval
-            console.log(this.race)
         }
         this.updateQueue.forEach((updateInfo: UpdateInfo, idx: number) => {
             updateInfo.current += interval

@@ -122,7 +122,11 @@ export default class Core {
         this.checkInterval(interval)
 
         this.engine.update(interval)
-        // console.log(1000 / interval)
+        const val = this.engine.getHuman(this.myName)?.race
+        if(val != undefined) {
+            this.ui.timer.setTime(val)
+        }
+        
         this.performance.end()
     }
     private output: (inputType: number, namespace: string, value: any) => void

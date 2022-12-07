@@ -24,7 +24,7 @@ export default class User extends Human {
         this.scene.add(model.scene)
         this.animation = new Animation(model.animations, model.scene)
         this.box = new Box3().setFromObject(model.scene)   
-        this.setPosition(new Vector3(-119, -0.5, 14))
+        this.setPosition(new Vector3(-55, -0.5, 66))
         this.setRotation(new Euler(0, 1.4, 0))
     }
     setPosition = (position: Vector3) => {
