@@ -8,7 +8,6 @@ import Human from "./Human";
 import UserKeyboardInputEventListener from "./UserKeyboardInputEventListener";
 import UserUpdateEventListener from "./UserUpdateEventListener";
 import UserExerciseInputEventListener from "./UserExerciseInputEventListener";
-import Visible from "./visible";
 
 export default class User extends Human {
     private camera: PerspectiveCamera

@@ -6,6 +6,9 @@ export default class Event<T> implements EventInterface<T> {
     public static KEYBOARD = 1
     public static EXERCISE = 2
 
+    public static START = 11
+    public static END = 12
+
     public eventCaller: Member;
     public value: T;
     public eventCode: number;

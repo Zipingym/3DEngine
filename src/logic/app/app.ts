@@ -16,6 +16,7 @@ export default class App extends Member {
         this.setAttribute(App.characterModel, new GltfAsset(config.characterModel))
 
         this.appendChild(new module.ThreeMember())
+        this.appendChild(new module.DomMember())
         this.appendChild(new module.InputMember())
         this.appendChild(new module.UpdateMember())
 

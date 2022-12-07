@@ -26,10 +26,11 @@ export default class Human extends Visible {
     public static ROT_WAIT_QUEUE = "rotationWaitQueue"
 
     public static ANIMATION = "animation"
+    public static RAYCASTER = "raycaster"
 
     private positionWaitQueue:Array<ChangeWait<Vector3>> = new Array()
     private rotationWaitQueue:Array<ChangeWait<Euler>> = new Array()
-     protected raycaster: Raycaster
+    protected raycaster: Raycaster
     constructor (
         asset: LoadAbleAsset<GLTF>,
         className?: string
@@ -37,6 +38,8 @@ export default class Human extends Visible {
         super(asset)
         this.class = className ?? ""
         this.raycaster = new Raycaster()
+
+        this.setAttribute(Human.RAYCASTER, this.raycaster)
 
         this.setAttribute(Human.SET_POSITION, this.setPosition.bind(this))
         this.setAttribute(Human.ADD_POSITION, this.addPosition.bind(this))

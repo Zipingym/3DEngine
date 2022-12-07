@@ -54,16 +54,26 @@ export default class PoseResult implements Results {
             return new JoinAngle(PoseResult.UNDEFINED, 0, 0)
         }
         else {
-            const arr = [
-                this.poseWorldLandmarks.at(jointInfo[0])!,
-                this.poseWorldLandmarks.at(jointInfo[1])!,
-                this.poseWorldLandmarks.at(jointInfo[2])!
-            ]
-            return new JoinAngle(
-                jointName, 
-                PoseResult.ThreeDegree(arr[0], arr[1], arr[2]),
-                ((arr[0].visibility ?? 0) + (arr[1].visibility ?? 0) + (arr[2].visibility ?? 0)) / 3
-            )
+            try {
+                const arr = [
+                    this.poseWorldLandmarks.at(jointInfo[0])!,
+                    this.poseWorldLandmarks.at(jointInfo[1])!,
+                    this.poseWorldLandmarks.at(jointInfo[2])!
+                ]
+                return new JoinAngle(
+                    jointName, 
+                    PoseResult.ThreeDegree(arr[0], arr[1], arr[2]),
+                    ((arr[0].visibility ?? 0) + (arr[1].visibility ?? 0) + (arr[2].visibility ?? 0)) / 3
+                )
+            }
+            catch(e) {
+                return new JoinAngle(
+                    "Error", 
+                    0,
+                    0
+                )
+            }
+
         }
     }
     public static ThreeDegree(
