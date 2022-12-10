@@ -20,10 +20,10 @@ export default class WebCamIo implements inputAble {
         ["rightHipY", [26, 24, 23]],
         ["leftHipX", [11, 23, 25]],
         ["rightHipX", [12, 24, 26]],
-        ["leftShoulderX", [13, 11, 23]],
-        ["rightShoulderX", [14, 12, 24]],
-        ["leftShoulderY", [13, 11, 12]],
-        ["rightShoulderY", [14, 12, 11]],
+        ["leftShoulderY", [13, 11, 23]],
+        ["rightShoulderY", [14, 12, 24]],
+        ["leftShoulderX", [13, 11, 12]],
+        ["rightShoulderX", [14, 12, 11]],
     ])
     constructor(
         inputType: number,
