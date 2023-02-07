@@ -36,7 +36,7 @@ export default class DumbleCurl extends ExerciseInputEventListener {
             return 1
         }
         else if(this.recentRightArm >= wait && this.recentRightArm - poseResult.duration < wait) {
-            this.exerciseName = ExerciseResult.rightDumbleCurl
+            this.exerciseName = ExerciseResult.RightDumbleCurl
             return 1
         }
         else return 0

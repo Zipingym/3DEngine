@@ -11,9 +11,10 @@ export default class UserExerciseInputEventListener extends EventListener {
             target.executeWithAttribute(Human.ADD_ROTATION, (rotAdder: (rot: Euler, time?: number) => void) => {
                 const dirCalculator = target.getAttribute(Human.DIR_CALCULATOR)
                 const exerciseName = event.value.name
-                if(exerciseName === ExerciseResult.DumbleCurl) posAdder(dirCalculator(3), 300)
-                else if(exerciseName === ExerciseResult.LeftDumbleCurl) rotAdder(new Euler(0, 0.5, 0), 300)
-                else if(exerciseName === ExerciseResult.rightDumbleCurl) rotAdder(new Euler(0, -0.5, 0), 300)
+                if(exerciseName === ExerciseResult.DumbleCurl) posAdder(dirCalculator(5), 500)
+                else if(exerciseName === ExerciseResult.LeftDumbleCurl) rotAdder(new Euler(0, 0.3, 0), 300)
+                else if(exerciseName === ExerciseResult.RightDumbleCurl) rotAdder(new Euler(0, -0.3, 0), 300)
+                else if(exerciseName === ExerciseResult.Squart) posAdder(new Vector3(0, 0.01, 0), 1500)
             })
         })
     }

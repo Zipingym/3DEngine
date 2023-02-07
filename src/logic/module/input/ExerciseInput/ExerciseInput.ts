@@ -8,6 +8,7 @@ import PoseResult from "./PoseResult"
 import Video from "./Video"
 import Performance from "@/util/performance"
 import Graphic from "./graphic/graphic"
+import Squart from "./analysis/Squart"
 
 export default class ExerciseInput extends Member {
     private pose: Pose
@@ -19,10 +20,10 @@ export default class ExerciseInput extends Member {
     ) {
         super()
         this.pose = new Pose({locateFile: (file) => {
-            return `./mediapipe/${file}`;
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
         }})
         this.pose.setOptions({
-            modelComplexity: 1,
+            modelComplexity: 0,
             smoothLandmarks: true,
             smoothSegmentation: true,
             minDetectionConfidence: 0.5,
@@ -31,6 +32,7 @@ export default class ExerciseInput extends Member {
 
         this.pose.onResults(this.onResult.bind(this));
         this.appendChild(new ExerciseInputChild(new DumbleCurl()))
+        this.appendChild(new ExerciseInputChild(new Squart()))
     }
     protected onPatchTree = () => {
         const videoElement = document.createElement("video")
